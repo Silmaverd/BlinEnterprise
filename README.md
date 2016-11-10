@@ -1,0 +1,2 @@
+# BlinEnterprise
+Projekt Zespołowy
