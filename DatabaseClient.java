@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
@@ -16,7 +18,14 @@ public class DatabaseClient {
     private String xmlContent;
     
     public DatabaseClient(){
+        
         xml = new File("cards.xml");
+        
+        try {
+            xmlContent = this.readFile();
+        } catch (IOException ex) {
+            System.out.println("ERROR: Nie przekopiowano pliku do stringa");
+        }
     }
     
     private String readFile() throws IOException {
@@ -38,16 +47,40 @@ public class DatabaseClient {
     }
     
     public int IdQuery(String cardname) throws IOException{
-        xmlContent = this.readFile();
-        String pattern = cardname+"</name>(\\s+)(<set rarity=)(\\D)(\\w+)(\\D)( muId=)(\\D)(\\d+)(\\D)(\\s?)(\\S*)(\\s+)(<set rarity=)(\\D)(\\w+)(\\D)( muId=)(\\D)(\\d+)";
+        
+        String pattern = cardname+"</name>";
+        String pattern2 = "muId=\"";
         Pattern regex = Pattern.compile(pattern);
+        
         Matcher searcher = regex.matcher(xmlContent);
-        //System.out.println("Regex: "+pattern);
+        int foo = 0;
         if (searcher.find()){
-            //System.out.println("Found value: "+ searcher.group(0));
-            if (Integer.parseInt(searcher.group(8)) == 0) return Integer.parseInt(searcher.group(19));//System.out.println("Card's ID: "+searcher.group(19));
-            else return Integer.parseInt(searcher.group(8));//System.out.println("Card's ID: "+ searcher.group(8));
-        }else{
+      
+            String numer = "0";
+        
+            while (numer.equals("0")) {
+                numer = "";
+                
+                regex = Pattern.compile(pattern2);
+                searcher.usePattern(regex);
+                searcher.find();
+                int indeks = searcher.end();
+                
+                System.out.println(xmlContent.charAt(indeks));
+
+                while(xmlContent.charAt(indeks) != '"')
+                {
+                    numer += xmlContent.charAt(indeks);
+                    indeks++;
+                }
+
+                System.out.println(numer);
+                foo = Integer.parseInt(numer);  
+            }
+            
+            return foo;
+        }
+        else{
             System.out.println("Nothing found");
             return 0;
         }
