@@ -48,39 +48,37 @@ public class DatabaseClient {
     
     public int IdQuery(String cardname) throws IOException{
         
-        String pattern = cardname+"</name>";
-        String pattern2 = "muId=\"";
-        Pattern regex = Pattern.compile(pattern);
+        String pattern_cardName = cardname+"</name>";
+        String pattern_cardID = "muId=\""; 
+        int int_cardIdNumber = 0;
+        String str_cardIdNumber = "0";
+        int indeks = 0; 
         
+        Pattern regex = Pattern.compile(pattern_cardName);
         Matcher searcher = regex.matcher(xmlContent);
-        int foo = 0;
-        if (searcher.find()){
-      
-            String numer = "0";
         
-            while (numer.equals("0")) {
-                numer = "";
+        if ( searcher.find() ) {
+            while ( str_cardIdNumber.equals("0") ) {
                 
-                regex = Pattern.compile(pattern2);
+                str_cardIdNumber = "";
+                
+                regex = Pattern.compile(pattern_cardID);
                 searcher.usePattern(regex);
                 searcher.find();
-                int indeks = searcher.end();
-                
-                System.out.println(xmlContent.charAt(indeks));
+                indeks = searcher.end();
 
                 while(xmlContent.charAt(indeks) != '"')
                 {
-                    numer += xmlContent.charAt(indeks);
+                    str_cardIdNumber += xmlContent.charAt(indeks);
                     indeks++;
                 }
 
-                System.out.println(numer);
-                foo = Integer.parseInt(numer);  
+                int_cardIdNumber = Integer.parseInt(str_cardIdNumber);  
             }
             
-            return foo;
-        }
-        else{
+            return int_cardIdNumber;
+            
+        }else{
             System.out.println("Nothing found");
             return 0;
         }
