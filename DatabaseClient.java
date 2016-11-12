@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 public class DatabaseClient {
     
     private File xml;
+    private String xmlContent;
     
     public DatabaseClient(){
         xml = new File("cards.xml");
@@ -33,17 +34,19 @@ public class DatabaseClient {
         }
     }
     
-    public void ImageQuery(String cardname) throws IOException{
-        String xmlContent = this.readFile();
-        String pattern = cardname+"</name>(\\s+)(<set rarity=)(\\D)(\\w+)(\\D)( muId=)(\\D)(\\d+)(\\D)";
+    public int ImageQuery(String cardname) throws IOException{
+        xmlContent = this.readFile();
+        String pattern = cardname+"</name>(\\s+)(<set rarity=)(\\D)(\\w+)(\\D)( muId=)(\\D)(\\d+)(\\D)(\\s?)(\\S*)(\\s+)(<set rarity=)(\\D)(\\w+)(\\D)( muId=)(\\D)(\\d+)";
         Pattern regex = Pattern.compile(pattern);
         Matcher searcher = regex.matcher(xmlContent);
         //System.out.println("Regex: "+pattern);
         if (searcher.find()){
             //System.out.println("Found value: "+ searcher.group(0));
-            System.out.println("Card's ID: "+ searcher.group(8));
+            if (Integer.parseInt(searcher.group(8)) == 0) return Integer.parseInt(searcher.group(19));//System.out.println("Card's ID: "+searcher.group(19));
+            else return Integer.parseInt(searcher.group(8));//System.out.println("Card's ID: "+ searcher.group(8));
         }else{
             System.out.println("Nothing found");
+            return 0;
         }
     }
 }
