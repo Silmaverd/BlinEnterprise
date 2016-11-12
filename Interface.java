@@ -1,9 +1,13 @@
 package blinenterprise;
 
+import java.awt.Image;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 public class Interface extends javax.swing.JFrame {
 
@@ -22,7 +26,7 @@ public class Interface extends javax.swing.JFrame {
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         StartMenu = new javax.swing.JPanel();
@@ -73,14 +77,12 @@ public class Interface extends javax.swing.JFrame {
                 .addGap(91, 91, 91))
         );
 
-        jToggleButton1.setText("Działa");
+        jToggleButton1.setText("Back");
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jToggleButton1ActionPerformed(evt);
             }
         });
-
-        CardImage.setText("ID: 0");
 
         CardNameInputLine.setText("Wyszukaj kartę");
         CardNameInputLine.addActionListener(new java.awt.event.ActionListener() {
@@ -95,24 +97,23 @@ public class Interface extends javax.swing.JFrame {
             DeckEditorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(DeckEditorPanelLayout.createSequentialGroup()
                 .addGap(43, 43, 43)
-                .addGroup(DeckEditorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(CardNameInputLine, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(DeckEditorPanelLayout.createSequentialGroup()
-                        .addComponent(CardImage, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(188, 188, 188)
-                        .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(455, Short.MAX_VALUE))
+                .addGroup(DeckEditorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(CardImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(CardNameInputLine, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 613, Short.MAX_VALUE)
+                .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(95, 95, 95))
         );
         DeckEditorPanelLayout.setVerticalGroup(
             DeckEditorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(DeckEditorPanelLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(CardNameInputLine, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addContainerGap()
                 .addGroup(DeckEditorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jToggleButton1)
-                    .addComponent(CardImage, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(110, Short.MAX_VALUE))
+                    .addComponent(CardNameInputLine, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(CardImage)
+                .addContainerGap(447, Short.MAX_VALUE))
         );
 
         jMenu1.setText("File");
@@ -151,31 +152,40 @@ public class Interface extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>                        
+    }// </editor-fold>//GEN-END:initComponents
 
-    private void DeckEditorButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                 
+    private void DeckEditorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeckEditorButtonActionPerformed
         StartMenu.setVisible(false);
         DeckEditorPanel.setVisible(true);     
-    }                                                
+    }//GEN-LAST:event_DeckEditorButtonActionPerformed
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                               
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
         DeckEditorPanel.setVisible(false);
         StartMenu.setVisible(true);
-    }                                              
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
 
-    private void CardCreatorButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                  
+    private void CardCreatorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CardCreatorButtonActionPerformed
         
-    }                                                 
+    }//GEN-LAST:event_CardCreatorButtonActionPerformed
 
-    private void CardNameInputLineActionPerformed(java.awt.event.ActionEvent evt) {                                                  
+    private void CardNameInputLineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CardNameInputLineActionPerformed
+        
         try {
-            int CardID = dbClient.ImageQuery(CardNameInputLine.getText());
-            if (CardID == 0) CardImage.setText("Card not found");
-            else CardImage.setText("ID: "+Integer.toString(CardID));
+            int cardID = dbClient.IdQuery(CardNameInputLine.getText());
+            if (cardID == 0) CardImage.setText("Card not found");
+            else CardImage.setText("ID: "+Integer.toString(cardID));
+            
+            // wyświetlanie obrazka karty
+            Image cardImage = dbClient.GetImage(cardID);
+            ImageIcon icon = new ImageIcon(cardImage); 
+            JLabel cardImageContainer = CardImage;
+            cardImageContainer.setIcon(icon);
+            
         } catch (IOException ex) {
             Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }                                                 
+            
+    }//GEN-LAST:event_CardNameInputLineActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -208,7 +218,7 @@ public class Interface extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify                     
+    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CardCreatorButton;
     private javax.swing.JLabel CardImage;
     private javax.swing.JTextField CardNameInputLine;
@@ -219,5 +229,5 @@ public class Interface extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JToggleButton jToggleButton1;
-    // End of variables declaration                   
+    // End of variables declaration//GEN-END:variables
 }
