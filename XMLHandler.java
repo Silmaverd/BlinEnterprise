@@ -59,7 +59,7 @@ public class XMLHandler extends DefaultHandler{
     @Override
     public void endElement(String uri, String localName, String qName) {
         if (qName.equalsIgnoreCase("card")) {
-            System.out.println("End Element: " + qName);
+            //System.out.println("End Element: " + qName);
         }
     }
 
