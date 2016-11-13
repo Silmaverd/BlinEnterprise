@@ -11,6 +11,11 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+import jdk.internal.org.xml.sax.helpers.DefaultHandler;
+import org.xml.sax.SAXException;
 
 public class DatabaseClient {
     
@@ -81,6 +86,18 @@ public class DatabaseClient {
         }else{
             System.out.println("Nothing found");
             return 0;
+        }
+    }
+    
+    public void ParseXML(){
+        try {
+            File inputFile = new File("cards.xml");
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            SAXParser saxParser = factory.newSAXParser();
+            XMLHandler xmlHandler = new XMLHandler();
+            saxParser.parse(inputFile, xmlHandler);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
     
