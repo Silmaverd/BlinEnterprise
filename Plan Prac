@@ -1,0 +1,72 @@
+BLIN Enterprise
+
+W ramach naszego projektu postaramy się stworzyć aplikację użytkową na podstawie popularnej gry karcianej Magic: the Gathering. Aplikacja będzie pozwalała użytkownikom na stworzenie własnej talii do gry, pobierając informacje o dostępnych kartach z prostej bazy danych. Podczas procesu tworzenia talii użytkownik będzie miał do dyspozycji szereg narzędzi między innymi sprawdzenie aktualnej ceny kart w markecie, analizę statystyczną talii oraz wypróbowanie jej w zamkniętym środowisku testowym. Projekt w głównej mierze planujemy wykonać w języku programowania Java. Przeznaczenie dla systemów operacyjnych Windows.
+
+1.11.2016 - 20.11.2016
+
+    Zapoznanie się z działaniem systemu kontroli wersji - Git  
+
+
+21.11.2016 - 22.12.2016
+
+    Stworzenie dokładnego planu aplikacji 
+
+    Poznanie rozwiązań i bibliotek potrzebnych do stworzenia aplikacji w języku programowania Java  
+
+    Wprowadzenie prostego interfejsu użytkownika
+
+    Tworzenie bazy danych
+
+
+23.12.2016 - 06.01.2017 Przerwa świąteczna - wakacje zimowe
+
+07.01.2017 - 30.01.2017
+
+    Połączenie programu z bazą danych
+
+    Zaimplementowanie podstawowej funkcjonalności układania talii z kart dostępnych w bazie danych 
+
+
+31.01.2017 - 22.02.2017 Przerwa na sesje zaliczeniowo-egzaminacyjną
+
+23.02.2017 - 10.04.2017
+
+    Stworzenie narzędzi ułatwiających użytkownikowi stworzenie i skompletowanie utworzonej talii kart
+
+    Wytworzenie systemu podpowiedzi dotyczących tworzonego przez użytkownika zbioru kart  
+
+
+10.04.2017 - 23.04.2017
+
+    Przerwa świąteczna - wakacje wiosenne
+
+
+24.04.2017 - 07.05.2017
+
+    Poprawa wizualna interfejsu użytkownika
+
+    Tworzenie sandboxowego środowiska do testowania talii
+
+
+08.05.2017 - nieokreślone
+
+    Testowanie finalnego produktu
+
+    Usuwanie bugów i glitchy 
+
+
+
+Podział obowiązków nie będzie narzucony z góry, zadania będziemy rozdzielać równomiernie pomiędzy członków grupy w zależności od potrzeb i stanu projektu.
+
+Skład grupy:
+
+    Zachary Różyński
+
+    Przemysław Seń - Cebula Developer
+
+    Bartosz Ruszniak
+
+    Jarosław Bartoszczyk - Jan Headmaster
+
+
+Z wyrazami szacunku, grupa BLIN Enterprise.
