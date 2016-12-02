@@ -85,6 +85,11 @@ public class Interface extends javax.swing.JFrame {
         });
 
         CardNameInputLine.setText("Wyszukaj kartę");
+        CardNameInputLine.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                CardNameInputLineFocusGained(evt);
+            }
+        });
         CardNameInputLine.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CardNameInputLineActionPerformed(evt);
@@ -186,6 +191,10 @@ public class Interface extends javax.swing.JFrame {
         }
             
     }//GEN-LAST:event_CardNameInputLineActionPerformed
+
+    private void CardNameInputLineFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_CardNameInputLineFocusGained
+        CardNameInputLine.setText("");
+    }//GEN-LAST:event_CardNameInputLineFocusGained
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
