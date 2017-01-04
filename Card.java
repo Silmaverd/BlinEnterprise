@@ -1,18 +1,37 @@
 package blinenterprise;
 
+import java.util.Collection;
+import java.util.HashSet;
+
 public class Card {
     private int power, toughness, cmc;
-    private String name, manacost, cardtext, color, cardtype;
+    private String name, manacost, cardtext, cardtype;
+    private Collection<String> colors;
+    private Collection<Integer> muIDs;
+    
+    public Card() {
+        muIDs = new HashSet<>();
+        colors = new HashSet<>();
+    }
 
-    public Card(String name, int power, int toughness, int cmc, String manacost, String cardtext, String color, String cardtype) {
-        this.power = power;
-        this.toughness = toughness;
-        this.cmc = cmc;
-        this.name = name;
-        this.manacost = manacost;
-        this.cardtext = cardtext;
-        this.color = color;
-        this.cardtype = cardtype;
+    public Collection<String> getColors() {
+        return colors;
+    }
+
+    public void addColor(String color) {
+        this.colors.add(color);
+    }
+
+    public Collection<Integer> getMuIDs() {
+        return muIDs;
+    }
+
+    public void addMuID(String muID) {
+        try{
+            muIDs.add(Integer.parseInt(muID));
+        }catch (NumberFormatException exc){
+            
+        }
     }
 
     public Card(String name) {
@@ -23,26 +42,46 @@ public class Card {
         return power;
     }
 
-    public void setPower(int power) {
-        this.power = power;
+    public void setPower(String power) {
+        try{
+            this.power = Integer.parseInt(power);
+        }catch(NumberFormatException ex){
+            //this.power = 0;
+        }
     }
 
     public int getToughness() {
         return toughness;
     }
 
-    public void setToughness(int toughness) {
-        this.toughness = toughness;
+    public void setToughness(String toughness) {
+        try{
+            this.toughness = Integer.parseInt(toughness);
+        }catch(NumberFormatException ex){
+            //this.toughness= 0;
+        }
     }
 
     public int getCmc() {
         return cmc;
     }
     
-    private void setCmc(){
+    public void calculateCmc(){
         String manacost = this.getManacost();
         String grey = Character.toString(manacost.charAt(0));
         this.cmc = Integer.parseInt(grey) + manacost.length()-1;
+    }
+    
+    public void setCMC(String CMC){
+        try{
+        this.cmc = Integer.parseInt(CMC);
+        } catch (NumberFormatException exc){
+            this.cmc = 0;
+        }
+    }
+    
+    public void setCMC(int CMC){
+        this.cmc = CMC;
     }
 
     public String getName() {
@@ -59,7 +98,6 @@ public class Card {
 
     public void setManacost(String manacost) {
         this.manacost = manacost;
-        this.setCmc();
     }
 
     public String getCardtext() {
@@ -70,23 +108,33 @@ public class Card {
         this.cardtext = cardtext;
     }
 
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
     public String getCardtype() {
         return cardtype;
     }
 
     public void setCardtype(String cardtype) {
         this.cardtype = cardtype;
+    } 
+    
+    public void printCard(){
+        System.out.println("Name: " + name);
+        System.out.println("MuIds: " + muIDs);
+        System.out.println("Type: " + cardtype);
+        System.out.println("Manacost: " + manacost);
+        System.out.println("CMC: " + cmc);
+        System.out.println("Colors: " + colors);
+        System.out.println("P/T: " + Integer.toString(power) + " / " + Integer.toString(toughness));
+        System.out.println("Text: "+cardtext);
     }
     
-    
-    
+    public String getCardDescription(){
+        return ("Name: " + name + "\n" + 
+                "Type: " + cardtype + "\n" + 
+                "Manacost: " + manacost + "\n" +
+                "CMC: " + cmc + "\n" +
+                "Colors: " + colors + "\n" +
+                "P/T: " + Integer.toString(power) + " / " + Integer.toString(toughness) + "\n" + 
+                "Text: "+cardtext + "\n");
+    }
     
 }

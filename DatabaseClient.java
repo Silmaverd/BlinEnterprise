@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -16,6 +17,7 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import jdk.internal.org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.SAXException;
+import java.util.Iterator;
 
 public class DatabaseClient {
     
@@ -96,6 +98,14 @@ public class DatabaseClient {
             SAXParser saxParser = factory.newSAXParser();
             XMLHandler xmlHandler = new XMLHandler();
             saxParser.parse(inputFile, xmlHandler);
+            
+            HashSet<Card> cards = (HashSet<Card>) xmlHandler.getCardCollection();   /// wczytywanie do hashsetu kolekcji kart
+            
+            for (Card card : cards){            // DO USUNIECIA ---- printuje kolekcje kart na konsole
+                System.out.println(card.getCardDescription());
+                System.out.println("");
+            }                               
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
