@@ -6,15 +6,15 @@ import java.util.HashSet;
 public class Card {
     private int power, toughness, cmc;
     private String name, manacost, cardtext, cardtype;
-    private Collection<String> colors;
-    private Collection<Integer> muIDs;
+    private HashSet<String> colors;
+    private HashSet<Integer> muIDs;
     
     public Card() {
         muIDs = new HashSet<>();
         colors = new HashSet<>();
     }
 
-    public Collection<String> getColors() {
+    public HashSet<String> getColors() {
         return colors;
     }
 
@@ -22,7 +22,7 @@ public class Card {
         this.colors.add(color);
     }
 
-    public Collection<Integer> getMuIDs() {
+    public HashSet<Integer> getMuIDs() {
         return muIDs;
     }
 

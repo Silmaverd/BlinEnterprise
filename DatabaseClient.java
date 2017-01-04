@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,76 +23,10 @@ import java.util.Iterator;
 public class DatabaseClient {
     
     private File xml;
-    private String xmlContent;
+    private CardCollection cardCollection;
     
-    public DatabaseClient(){
-        
-        xml = new File("cards.xml");
-        
-        try {
-            xmlContent = this.readFile();
-        } catch (IOException ex) {
-            System.out.println("ERROR: Nie przekopiowano pliku do stringa");
-        }
-    }
-    
-    private String readFile() throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader (xml));
-        String line = null;
-        StringBuilder stringBuilder = new StringBuilder();
-        String ls = System.getProperty("line.separator");
-
-        try {
-            while((line = reader.readLine()) != null) {
-                stringBuilder.append(line);
-                stringBuilder.append(ls);
-            }
-
-            return stringBuilder.toString();
-        } finally {
-            reader.close();
-        }
-    }
-    
-    public int IdQuery(String cardname) throws IOException{
-        
-        String pattern_cardName = cardname+"</name>";
-        String pattern_cardID = "muId=\""; 
-        int int_cardIdNumber = 0;
-        String str_cardIdNumber = "0";
-        int indeks = 0; 
-        
-        Pattern regex = Pattern.compile(pattern_cardName);
-        Matcher searcher = regex.matcher(xmlContent);
-        
-        if ( searcher.find() ) {
-            while ( str_cardIdNumber.equals("0") ) {
-                
-                str_cardIdNumber = "";
-                
-                regex = Pattern.compile(pattern_cardID);
-                searcher.usePattern(regex);
-                searcher.find();
-                indeks = searcher.end();
-
-                while(xmlContent.charAt(indeks) != '"')
-                {
-                    str_cardIdNumber += xmlContent.charAt(indeks);
-                    indeks++;
-                }
-
-                int_cardIdNumber = Integer.parseInt(str_cardIdNumber);  
-            }
-            
-            return int_cardIdNumber;
-            
-        }else{
-            System.out.println("Nothing found");
-            return 0;
-        }
-    }
-    
-    public void ParseXML(){
+    private HashSet<Card> ParseXML(){
+        HashSet<Card> cards = new HashSet<>();
         try {
             File inputFile = new File("cards.xml");
             SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -99,27 +34,41 @@ public class DatabaseClient {
             XMLHandler xmlHandler = new XMLHandler();
             saxParser.parse(inputFile, xmlHandler);
             
-            HashSet<Card> cards = (HashSet<Card>) xmlHandler.getCardCollection();   /// wczytywanie do hashsetu kolekcji kart
-            
-            for (Card card : cards){            // DO USUNIECIA ---- printuje kolekcje kart na konsole
-                System.out.println(card.getCardDescription());
-                System.out.println("");
-            }                               
-            
-        } catch (Exception e) {
-            e.printStackTrace();
+            cards = (HashSet<Card>) xmlHandler.getCardCollection();   /// wczytywanie do hashsetu kolekcji kart                              
+            return cards;
+        } catch (IOException | ParserConfigurationException | SAXException e) {
+        }finally{
+            return cards;
         }
     }
     
-    public Image GetImage(int cardID) {
+    public DatabaseClient(){      
+        xml = new File("cards.xml");
+        cardCollection = new CardCollection(new HashSet<>());
+        Collection<Card> col = ParseXML();
+        cardCollection.setCollection(col);
+    }
+    
+    public String getCardDescription(String name) throws CardNotFoundException{
+        return cardCollection.getCardDescription(name);
+    }
+    
+    public Image GetImage(String cardName) throws CardNotFoundException {
         Image image = null;
-        try {
-            URL url = new URL( "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid="+cardID+"&type=card");
-            image = ImageIO.read(url);
+        HashSet<Integer> muIds = cardCollection.getCardIDs(cardName);
+        for(Integer cardID : muIds){ 
+            //System.out.println("Trying: "+ Integer.toString(cardID));
+            try {
+                URL url = new URL( "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid="+Integer.toString(cardID)+"&type=card");
+                image = ImageIO.read(url);
+                System.out.println("http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid="+Integer.toString(cardID)+"&type=card");
             } catch (IOException e) {
                 System.out.println("Shieeeeeeeeeeeeeeeet");
             }
-        
+            if (cardID != 0){
+                break;
+            }
+        }
         return image;
     }
 }
