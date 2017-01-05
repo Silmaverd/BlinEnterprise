@@ -1,5 +1,5 @@
 
-package blinenterprise;
+package BlinEnterprise;
 
 
 public class CardNotFoundException extends Throwable{
