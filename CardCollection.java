@@ -20,6 +20,10 @@ public class CardCollection {
         }*/
     }
     
+    public Collection<Card> getCardCollection(){
+        return this.cards;
+    }
+    
     public HashSet<Integer> getCardIDs(String name) throws CardNotFoundException{
         return getCardWithName(name).getMuIDs();
     }

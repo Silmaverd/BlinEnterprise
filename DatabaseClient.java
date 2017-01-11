@@ -49,7 +49,7 @@ public class DatabaseClient {
         cardCollection = new CardCollection(new HashSet<>());
         Collection<Card> col = ParseXML();
         cardCollection.setCollection(col);
-        currentCardList = new HashSet<>();
+        currentCardList = (HashSet<Card>) cardCollection.getCardCollection();
     }
     
     public String getCardDescription(String name) throws CardNotFoundException{
