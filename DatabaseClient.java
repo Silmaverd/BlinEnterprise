@@ -53,6 +53,18 @@ public class DatabaseClient {
         return cardCollection.getCardDescription(name);
     }
     
+    public String[] getCardNamesArray(){
+        return cardCollection.getCardNames();
+    }
+    
+    public String[] getCardNamesArrayContaining(String text){
+        return cardCollection.getCardsContaining(text);
+    }
+    
+    public Card getCardWithName(String name) throws CardNotFoundException{
+        return cardCollection.getCardWithName(name);
+    }
+    
     public Image GetImage(String cardName) throws CardNotFoundException {
         Image image = null;
         HashSet<Integer> muIds = cardCollection.getCardIDs(cardName);
@@ -61,7 +73,7 @@ public class DatabaseClient {
             try {
                 URL url = new URL( "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid="+Integer.toString(cardID)+"&type=card");
                 image = ImageIO.read(url);
-                System.out.println("http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid="+Integer.toString(cardID)+"&type=card");
+                //System.out.println("http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid="+Integer.toString(cardID)+"&type=card");
             } catch (IOException e) {
                 System.out.println("Shieeeeeeeeeeeeeeeet");
             }

@@ -1,6 +1,7 @@
 package blinenterprise;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -34,5 +35,31 @@ public class CardCollection {
             if (card.getName().equals(name)) return card;
         }
         throw new CardNotFoundException("Nie znaleziono karty");
+    }
+    
+    public String[] getCardNames(){
+        String[] lista = new String[cards.size()];
+        int i=0;
+        for (Card card : cards){
+            lista[i] = card.getName();
+            i++;
+        }
+        Arrays.sort(lista);
+        return lista;
+    }
+    
+    public String[] getCardsContaining(String text){
+        HashSet<String> lista = new HashSet();
+        for (Card card : cards){
+            if (card.getName().length() >= text.length()){
+                //System.out.println("comparing: " + card.getName().substring(0, text.length()) + "   " + text);
+                if (card.getName().substring(0, text.length()).equals(text))
+                    //System.out.println("dodane");
+                    lista.add(card.getName());
+            }
+        }
+        String[] list_tab = lista.toArray(new String[lista.size()]);
+        Arrays.sort(list_tab);
+        return list_tab;
     }
 }
