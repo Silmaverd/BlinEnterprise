@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.logging.Level;
@@ -24,6 +25,7 @@ public class DatabaseClient {
     
     private File xml;
     private CardCollection cardCollection;
+    private HashSet<Card> currentCardList;
     
     private HashSet<Card> ParseXML(){
         HashSet<Card> cards = new HashSet<>();
@@ -47,10 +49,14 @@ public class DatabaseClient {
         cardCollection = new CardCollection(new HashSet<>());
         Collection<Card> col = ParseXML();
         cardCollection.setCollection(col);
+        currentCardList = new HashSet<>();
     }
     
     public String getCardDescription(String name) throws CardNotFoundException{
-        return cardCollection.getCardDescription(name);
+        for (Card card: currentCardList){
+           if (card.getName().equals(name)) return card.getCardDescription();
+        }
+        throw new CardNotFoundException("Nie znaleziono karty");
     }
     
     public String[] getCardNamesArray(){
@@ -58,16 +64,28 @@ public class DatabaseClient {
     }
     
     public String[] getCardNamesArrayContaining(String text){
-        return cardCollection.getCardsContaining(text);
+        currentCardList = cardCollection.getCardsContaining(text);
+        String[] list_tab = new String[currentCardList.size()];
+        int i=0;
+        for (Card card : currentCardList){
+            list_tab[i] = card.getName();
+            i++;
+        }
+        Arrays.sort(list_tab);
+        return list_tab;
     }
     
     public Card getCardWithName(String name) throws CardNotFoundException{
-        return cardCollection.getCardWithName(name);
+
+        for (Card card: currentCardList){
+            if (card.getName().equals(name)) return card;
+        }
+        throw new CardNotFoundException("Nie znaleziono karty");
     }
     
-    public Image GetImage(String cardName) throws CardNotFoundException {
+    public Image GetImage(Card card) throws CardNotFoundException {
         Image image = null;
-        HashSet<Integer> muIds = cardCollection.getCardIDs(cardName);
+        HashSet<Integer> muIds = card.getMuIDs();
         for(Integer cardID : muIds){ 
             //System.out.println("Trying: "+ Integer.toString(cardID));
             try {

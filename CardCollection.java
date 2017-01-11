@@ -48,18 +48,16 @@ public class CardCollection {
         return lista;
     }
     
-    public String[] getCardsContaining(String text){
-        HashSet<String> lista = new HashSet();
+    public HashSet<Card> getCardsContaining(String text){
+        HashSet<Card> lista = new HashSet();
         for (Card card : cards){
             if (card.getName().length() >= text.length()){
                 //System.out.println("comparing: " + card.getName().substring(0, text.length()) + "   " + text);
                 if (card.getName().substring(0, text.length()).equals(text))
                     //System.out.println("dodane");
-                    lista.add(card.getName());
+                    lista.add(card);
             }
         }
-        String[] list_tab = lista.toArray(new String[lista.size()]);
-        Arrays.sort(list_tab);
-        return list_tab;
+        return lista;
     }
 }

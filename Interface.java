@@ -222,11 +222,13 @@ public class Interface extends javax.swing.JFrame {
     }//GEN-LAST:event_CardNameInputLineActionPerformed
 
     private void CardListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_CardListValueChanged
-        try {
-            currentCard = dbClient.getCardWithName(CardList.getSelectedValue());
-            showCurrentCard();
-        } catch (CardNotFoundException ex) {
+        if (!evt.getValueIsAdjusting()) {//This line prevents double events
+            try {
+                currentCard = dbClient.getCardWithName(CardList.getSelectedValue());
+                showCurrentCard();
+            } catch (CardNotFoundException ex) {
             
+            }
         }
     }//GEN-LAST:event_CardListValueChanged
 
@@ -237,7 +239,7 @@ public class Interface extends javax.swing.JFrame {
     private void showCurrentCard(){
         Image cardImage;
         try {
-            cardImage = dbClient.GetImage(currentCard.getName());
+            cardImage = dbClient.GetImage(currentCard);
             ImageIcon icon = new ImageIcon(cardImage);
             JLabel cardImageContainer = CardImage;
             cardImageContainer.setIcon(icon);
