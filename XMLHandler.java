@@ -43,7 +43,6 @@ public class XMLHandler extends DefaultHandler{
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException{
         if (qName.equalsIgnoreCase("card")) {
-            System.out.println("");
             card = new Card();
             muIDs = new HashSet<String>();
             bmuId = true;

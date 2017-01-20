@@ -88,6 +88,7 @@ public class DatabaseClient {
         HashSet<Integer> muIds = card.getMuIDs();
         for(Integer cardID : muIds){ 
             //System.out.println("Trying: "+ Integer.toString(cardID));
+            if (cardID == 0) continue;
             try {
                 URL url = new URL( "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid="+Integer.toString(cardID)+"&type=card");
                 image = ImageIO.read(url);

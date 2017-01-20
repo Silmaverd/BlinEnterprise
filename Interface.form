@@ -14,6 +14,37 @@
             <Property name="text" type="java.lang.String" value="Edit"/>
           </Properties>
         </Menu>
+        <Menu class="javax.swing.JMenu" name="deckMenu">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Deck"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="newDeck">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="New"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newDeckActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="saveDeck">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Save"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveDeckActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="loadDeck">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Load"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="loadDeckActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
       </SubComponents>
     </Menu>
   </NonVisualComponents>
@@ -80,7 +111,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
                   <Component id="DeckEditorButton" min="-2" pref="322" max="-2" attributes="0"/>
-                  <EmptySpace pref="268" max="32767" attributes="0"/>
+                  <EmptySpace pref="699" max="32767" attributes="0"/>
                   <Component id="CardCreatorButton" min="-2" pref="330" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
               </Group>
@@ -89,7 +120,7 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="130" max="32767" attributes="0"/>
+                  <EmptySpace pref="386" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="CardCreatorButton" alignment="3" min="-2" pref="259" max="-2" attributes="0"/>
                       <Component id="DeckEditorButton" alignment="3" min="-2" pref="259" max="-2" attributes="0"/>
@@ -126,21 +157,36 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jScrollPane2" alignment="1" min="-2" pref="209" max="-2" attributes="0"/>
-                      <Component id="CardNameInputLine" min="-2" pref="209" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="jToggleButton1" min="-2" pref="159" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="104" max="-2" attributes="0"/>
+                          <Component id="jScrollPane2" min="-2" pref="209" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="jToggleButton1" min="-2" pref="159" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="104" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jScrollPane1" alignment="0" min="-2" pref="221" max="-2" attributes="0"/>
+                                      <Component id="CardImage" alignment="0" min="-2" pref="243" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="removeCardButton" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="addCardToSideboardButton" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="removeCardFromSideboardButton" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="addCardButton" max="32767" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                                  <Component id="currentDeckPanel" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
-                          <Component id="CardImage" min="-2" pref="243" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" min="-2" pref="172" max="-2" attributes="0"/>
-                          <EmptySpace pref="348" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="CardNameInputLine" min="-2" pref="367" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -149,20 +195,30 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="CardNameInputLine" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="37" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jScrollPane1" min="-2" pref="257" max="-2" attributes="0"/>
-                              <Component id="CardImage" alignment="0" min="-2" pref="317" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
-                          <Component id="jToggleButton1" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="currentDeckPanel" max="32767" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="CardImage" min="-2" pref="317" max="-2" attributes="0"/>
+                          <EmptySpace pref="147" max="32767" attributes="0"/>
+                          <Component id="jScrollPane1" min="-2" pref="168" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jScrollPane2" min="-2" pref="398" max="-2" attributes="0"/>
+                      <Component id="jScrollPane2" alignment="0" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="81" pref="81" max="-2" attributes="0"/>
+                          <Component id="addCardButton" min="-2" pref="46" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="removeCardButton" min="-2" pref="46" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
+                          <Component id="addCardToSideboardButton" min="-2" pref="46" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="removeCardFromSideboardButton" min="-2" pref="46" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="jToggleButton1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -212,6 +268,9 @@
           <SubComponents>
             <Component class="javax.swing.JList" name="CardList">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Microsoft Sans Serif" size="14" style="0"/>
+                </Property>
                 <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
                   <StringArray count="5">
                     <StringItem index="0" value="Item 1"/>
@@ -231,6 +290,107 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JButton" name="addCardButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Add"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addCardButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Container class="javax.swing.JPanel" name="currentDeckPanel">
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="DeckTabbedPanel" min="-2" pref="741" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="deckNameField" min="-2" pref="345" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="deckSizeLabel" min="-2" pref="199" max="-2" attributes="0"/>
+                                  <Component id="sideboardSizeLabel" min="-2" pref="165" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                              <Component id="deckNameField" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                              <Component id="deckSizeLabel" min="-2" pref="25" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="sideboardSizeLabel" min="-2" pref="25" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Component id="DeckTabbedPanel" pref="544" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JTextField" name="deckNameField">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Nowy deck"/>
+              </Properties>
+              <Events>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="deckNameFieldKeyReleased"/>
+              </Events>
+            </Component>
+            <Container class="javax.swing.JTabbedPane" name="DeckTabbedPanel">
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
+            </Container>
+            <Component class="javax.swing.JLabel" name="deckSizeLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Deck size:  "/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="sideboardSizeLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Sideboard size:  "/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Component class="javax.swing.JButton" name="removeCardButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Remove"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="removeCardButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="addCardToSideboardButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Add to sideboard"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addCardToSideboardButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="removeCardFromSideboardButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Remove from sideboard"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="removeCardFromSideboardButtonActionPerformed"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>
