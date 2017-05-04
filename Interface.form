@@ -111,7 +111,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
                   <Component id="DeckEditorButton" min="-2" pref="322" max="-2" attributes="0"/>
-                  <EmptySpace pref="699" max="32767" attributes="0"/>
+                  <EmptySpace pref="753" max="32767" attributes="0"/>
                   <Component id="CardCreatorButton" min="-2" pref="330" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
               </Group>
@@ -133,7 +133,7 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="DeckEditorButton">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Deck Edit"/>
+            <Property name="text" type="java.lang.String" value="Deck Editor"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DeckEditorButtonActionPerformed"/>
@@ -141,7 +141,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="CardCreatorButton">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Create Card"/>
+            <Property name="text" type="java.lang.String" value="Deck Analyzer"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CardCreatorButtonActionPerformed"/>

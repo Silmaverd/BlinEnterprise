@@ -75,14 +75,14 @@ public class Interface extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        DeckEditorButton.setText("Deck Edit");
+        DeckEditorButton.setText("Deck Editor");
         DeckEditorButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DeckEditorButtonActionPerformed(evt);
             }
         });
 
-        CardCreatorButton.setText("Create Card");
+        CardCreatorButton.setText("Deck Analyzer");
         CardCreatorButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CardCreatorButtonActionPerformed(evt);
@@ -96,7 +96,7 @@ public class Interface extends javax.swing.JFrame {
             .addGroup(StartMenuLayout.createSequentialGroup()
                 .addGap(100, 100, 100)
                 .addComponent(DeckEditorButton, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 699, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 753, Short.MAX_VALUE)
                 .addComponent(CardCreatorButton, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(89, 89, 89))
         );
