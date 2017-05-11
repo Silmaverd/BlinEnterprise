@@ -274,7 +274,7 @@ public class Interface extends javax.swing.JFrame {
         DeckAnalyzerPaneLayout.setVerticalGroup(
             DeckAnalyzerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(DeckAnalyzerPaneLayout.createSequentialGroup()
-                .addComponent(DeckAnalyzer, javax.swing.GroupLayout.DEFAULT_SIZE, 731, Short.MAX_VALUE)
+                .addComponent(DeckAnalyzer, javax.swing.GroupLayout.PREFERRED_SIZE, 731, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -453,14 +453,14 @@ public class Interface extends javax.swing.JFrame {
                 case 2:
                     return;
             }
-            currentDeck.clear();
-            currentDeck.setIsSaved(true);
-            deckNameField.setText("New deck");
-            deckSizeLabel.setText("Deck size:  0");
-            sideboardSizeLabel.setText("Sideboard size:  0");
-            deckPane.loadLists(currentDeck);
-            sideboardPane.loadLists(currentDeck.getSideboard());
         }
+        currentDeck.clear();
+        currentDeck.setIsSaved(true);
+        deckNameField.setText("New deck");
+        deckSizeLabel.setText("Deck size:  0");
+        sideboardSizeLabel.setText("Sideboard size:  0");
+        deckPane.loadLists(currentDeck);
+        sideboardPane.loadLists(currentDeck.getSideboard());
     }//GEN-LAST:event_newDeckActionPerformed
 
     private void saveDeckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveDeckActionPerformed
@@ -479,6 +479,7 @@ public class Interface extends javax.swing.JFrame {
             deckNameField.setText(currentDeck.getName());
             deckSizeLabel.setText("Deck size:  " +Integer.toString(currentDeck.getSize()));
             sideboardSizeLabel.setText("Sideboard size:  " + Integer.toString(currentDeck.getSideboardSize()));
+            DeckAnalyzer.reloadDeck(currentDeck);
         } catch (IOException ex) {
             
         } catch (CardNotFoundException ex) {

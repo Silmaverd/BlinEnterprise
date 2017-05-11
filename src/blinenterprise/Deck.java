@@ -1,11 +1,13 @@
 package blinenterprise;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -438,4 +440,39 @@ public class Deck {
         this.isSaved = isSaved;
     }
     
+    private String[] getAsArray(){
+        ArrayList<String> cardlist = new ArrayList();
+        for (CardStructure c: creatures) cardlist.add(c.amount + "x   "+c.card.getName());
+        for (CardStructure c: instants) cardlist.add(c.amount + "x   "+c.card.getName());
+        for (CardStructure c: sorceries) cardlist.add(c.amount + "x   "+c.card.getName());
+        for (CardStructure c: enchantments) cardlist.add(c.amount + "x   "+c.card.getName());
+        for (CardStructure c: artifacts) cardlist.add(c.amount + "x   "+c.card.getName());
+        for (CardStructure c: planeswalkers) cardlist.add(c.amount + "x   "+c.card.getName());
+        for (CardStructure c: lands) cardlist.add(c.amount + "x   "+c.card.getName());
+        for (CardStructure c: other) cardlist.add(c.amount + "x   "+c.card.getName());
+        
+        String[] array = new String[cardlist.size()];
+        for (int i=0; i<cardlist.size(); i++){
+            array[i] = cardlist.get(i);
+        }
+
+        return array;
+    }
+    
+    public String[] getDeckAsArray(){
+        String[] first = this.getAsArray();
+        String[] second = this.sideboard.getAsArray();
+        String[] all = new String[(first.length + second.length+3)];
+        System.out.println(all.length);
+        int i=1;
+        all[0] = new String("Main:");
+        for (i=1; i<first.length+1; i++) all[i] = first[i-1];
+        all[i] = new String(" ");
+        all[i+1] = new String("Sideboard:");
+        i+=2;
+        int k=0;
+        for (i=i; i<all.length; i++) {all[i] = second[k]; k++;}
+        return all;
+    }
+ 
 }
