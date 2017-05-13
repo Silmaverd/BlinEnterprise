@@ -462,7 +462,6 @@ public class Deck {
         String[] first = this.getAsArray();
         String[] second = this.sideboard.getAsArray();
         String[] all = new String[(first.length + second.length+3)];    // Dlugosc tablicy to ilosc roznych kart w decku + sideboardzie
-        System.out.println(all.length);
         int i=1;
         all[0] = new String("Main:");
         for (i=1; i<first.length+1; i++) all[i] = first[i-1];
@@ -484,6 +483,14 @@ public class Deck {
         all.addAll(lands);
         all.addAll(planeswalkers);
         all.addAll(other);
+        all.addAll(sideboard.creatures);
+        all.addAll(sideboard.instants);
+        all.addAll(sideboard.sorceries);
+        all.addAll(sideboard.enchantments);
+        all.addAll(sideboard.artifacts);
+        all.addAll(sideboard.lands);
+        all.addAll(sideboard.planeswalkers);
+        all.addAll(sideboard.other);
         return all;
     }
 }
