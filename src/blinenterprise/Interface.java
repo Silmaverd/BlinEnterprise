@@ -123,6 +123,7 @@ public class Interface extends javax.swing.JFrame {
             }
         });
 
+        card_description_field.setEditable(false);
         card_description_field.setColumns(20);
         card_description_field.setRows(5);
         jScrollPane1.setViewportView(card_description_field);
@@ -375,7 +376,7 @@ public class Interface extends javax.swing.JFrame {
     private void CardNameInputLineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CardNameInputLineActionPerformed
         try {
             card_description_field.setText(dbClient.getCardDescription(CardNameInputLine.getText()));
-            currentCard = dbClient.getCardWithName(CardNameInputLine.getText());
+            currentCard = dbClient.getCardWithName(CardNameInputLine.getText().toLowerCase());
             showCurrentCard();
         } catch (CardNotFoundException ex) {
             CardNameInputLine.setText("Card not found");

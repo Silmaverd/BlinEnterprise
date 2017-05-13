@@ -56,7 +56,7 @@ public class CardCollection {                               // Kolekcja wczytany
         for (Card card : cards){
             if (card.getName().length() >= text.length()){
                 //System.out.println("comparing: " + card.getName().substring(0, text.length()) + "   " + text);
-                if (card.getName().substring(0, text.length()).equals(text))
+                if (card.getName().toLowerCase().substring(0, text.length()).equals(text))
                     //System.out.println("dodane");
                     lista.add(card);
             }

@@ -1,10 +1,18 @@
 package blinenterprise;
 
+import java.awt.BorderLayout;
 import java.awt.Image;
 import java.util.Vector;
+import javafx.scene.layout.Border;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+/*import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PiePlot;
+import org.jfree.data.general.DefaultPieDataset;*/
 
 public class DeckAnalyzer extends javax.swing.JPanel {
 
@@ -27,6 +35,7 @@ public class DeckAnalyzer extends javax.swing.JPanel {
         String[] cardListArray = currentDeck.getDeckAsArray();
         DeckList.setListData(cardListArray);
         DeckNameLabel.setText(currentDeck.getName());
+        //PaintChart();
     }
 
     @SuppressWarnings("unchecked")
@@ -40,7 +49,7 @@ public class DeckAnalyzer extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         card_description_field = new javax.swing.JTextArea();
         ProbabilisticsButton = new javax.swing.JButton();
-        ChartPanel = new javax.swing.JPanel();
+        chartBackgroundPanel = new javax.swing.JPanel();
 
         setPreferredSize(new java.awt.Dimension(1618, 762));
 
@@ -49,8 +58,14 @@ public class DeckAnalyzer extends javax.swing.JPanel {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        DeckList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                DeckListValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(DeckList);
 
+        card_description_field.setEditable(false);
         card_description_field.setColumns(20);
         card_description_field.setRows(5);
         jScrollPane2.setViewportView(card_description_field);
@@ -62,14 +77,14 @@ public class DeckAnalyzer extends javax.swing.JPanel {
             }
         });
 
-        javax.swing.GroupLayout ChartPanelLayout = new javax.swing.GroupLayout(ChartPanel);
-        ChartPanel.setLayout(ChartPanelLayout);
-        ChartPanelLayout.setHorizontalGroup(
-            ChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout chartBackgroundPanelLayout = new javax.swing.GroupLayout(chartBackgroundPanel);
+        chartBackgroundPanel.setLayout(chartBackgroundPanelLayout);
+        chartBackgroundPanelLayout.setHorizontalGroup(
+            chartBackgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 274, Short.MAX_VALUE)
         );
-        ChartPanelLayout.setVerticalGroup(
-            ChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        chartBackgroundPanelLayout.setVerticalGroup(
+            chartBackgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
@@ -89,7 +104,7 @@ public class DeckAnalyzer extends javax.swing.JPanel {
                         .addGap(203, 203, 203)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(ProbabilisticsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ChartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(chartBackgroundPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(511, Short.MAX_VALUE))
         );
@@ -106,7 +121,7 @@ public class DeckAnalyzer extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(ProbabilisticsButton)
                                 .addGap(18, 18, 18)
-                                .addComponent(ChartPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(chartBackgroundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(CardImage, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -118,6 +133,25 @@ public class DeckAnalyzer extends javax.swing.JPanel {
         JFrame probabilisticsWindow = new Probablilistics();
         probabilisticsWindow.setVisible(true);
     }//GEN-LAST:event_ProbabilisticsButtonActionPerformed
+
+    private void DeckListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_DeckListValueChanged
+        if (!evt.getValueIsAdjusting()) {//This line prevents double events
+            try {
+                String[] arr = DeckList.getSelectedValue().split("   ");
+                if (arr.length == 1) return;
+                String name = arr[1];
+                Card currentCard = dbClient.getCardWithName(name);
+                Image cardImage;
+                cardImage = dbClient.GetImage(currentCard);
+                ImageIcon icon = new ImageIcon(cardImage);
+                JLabel cardImageContainer = CardImage;
+                cardImageContainer.setIcon(icon);
+                card_description_field.setText(dbClient.getCardDescription(currentCard.getName()));
+            }catch (CardNotFoundException ex) {
+                
+            }
+        }
+    }//GEN-LAST:event_DeckListValueChanged
 
     public void showCard(Card currentCard){                 // Wyswietla obrazek karty w jLabel
         Image cardImage;
@@ -132,7 +166,7 @@ public class DeckAnalyzer extends javax.swing.JPanel {
         }       
     }
     
-    public void PaintChart(){                                               // Funkcja rysuje wykres mana-costu
+    /*public void PaintChart(){                                               // Funkcja rysuje wykres mana-costu
         int totalMC = 0, R = 0, G = 0, U = 0, B = 0, W = 0, C = 0;          // Symole reprezentujace kolory many
         Vector<CardStructure> cardsInDeck = currentDeck.getAllCardsAsVector();
         for (CardStructure cs : cardsInDeck){                               // Zliczanie poszczegolnycb symboli many
@@ -146,16 +180,29 @@ public class DeckAnalyzer extends javax.swing.JPanel {
             }
         }
         totalMC = R + G + B + U + W;
-        //DefaultPieDataet pieSet = new DefaultPieDataset();
-    }
+        if (totalMC == 0) return;
+        DefaultPieDataset pieSet = new DefaultPieDataset();
+        pieSet.setValue("Red", R);
+        pieSet.setValue("Blue", U);
+        pieSet.setValue("Black", B);
+        pieSet.setValue("White", W);
+        pieSet.setValue("Green", G);
+        pieSet.setValue("Generic", C);
+        JFreeChart chart = ChartFactory.createPieChart("Wykres mana", pieSet, true, true, true);
+        PiePlot catPlot = (PiePlot)chart.getPlot();
+        ChartPanel chartPanel = new ChartPanel(chart);
+        chartBackgroundPanel.removeAll();
+        chartBackgroundPanel.add(chartPanel, BorderLayout.CENTER);
+        chartBackgroundPanel.validate();
+    }*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel CardImage;
-    private javax.swing.JPanel ChartPanel;
     private javax.swing.JList<String> DeckList;
     private javax.swing.JLabel DeckNameLabel;
     private javax.swing.JButton ProbabilisticsButton;
     private javax.swing.JTextArea card_description_field;
+    private javax.swing.JPanel chartBackgroundPanel;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
