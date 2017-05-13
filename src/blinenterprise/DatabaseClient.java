@@ -16,19 +16,20 @@ import org.xml.sax.SAXException;
 public class DatabaseClient {
     
     private File xml;
-    private CardCollection cardCollection;
+    private CardCollection cardCollection;                                          // Klient bazy danych przechowuje kolekcje wczytanych kart jako obiekt CardCollection
+                                                                                    // Tylko klient bazy danych ma dostep do kolekcji kart (wzorzec projektowy Proxy)
     private HashSet<Card> currentCardList;
     
-    private HashSet<Card> ParseXML(){
+    private HashSet<Card> ParseXML(){                                               // Dekowanie bazy danych XML
         HashSet<Card> cards = new HashSet<>();
         try {
             File inputFile = new File("cards.xml");
-            SAXParserFactory factory = SAXParserFactory.newInstance();
+            SAXParserFactory factory = SAXParserFactory.newInstance();              // Fabryka SAXParsera tworzy nam obiekt Parsera
             SAXParser saxParser = factory.newSAXParser();
-            XMLHandler xmlHandler = new XMLHandler();
-            saxParser.parse(inputFile, xmlHandler);
+            XMLHandler xmlHandler = new XMLHandler();                               // Handler okreslajacy sposob parsowania
+            saxParser.parse(inputFile, xmlHandler);                                 // Plik bazy danych jest parsowany
             
-            cards = (HashSet<Card>) xmlHandler.getCardCollection();   /// wczytywanie do hashsetu kolekcji kart                              
+            cards = (HashSet<Card>) xmlHandler.getCardCollection();                 // Wczytywanie do hashsetu wczytanej kolekcji kart                              
             return cards;
         } catch (IOException | ParserConfigurationException | SAXException e) {
         }finally{
@@ -36,15 +37,15 @@ public class DatabaseClient {
         }
     }
     
-    public DatabaseClient(){      
-        xml = new File("cards.xml");
-        cardCollection = new CardCollection(new HashSet<>());
+    public DatabaseClient(){                                                        // Inicjalizacja kolekcji
+        xml = new File("cards.xml");                                                // Baza danych jest w pliku xml
+        cardCollection = new CardCollection(new HashSet<>());                       // Plik dekodowany jest za pomoca SAX Parsera
         Collection<Card> col = ParseXML();
         cardCollection.setCollection(col);
         currentCardList = (HashSet<Card>) cardCollection.getCardCollection();
     }
     
-    public String getCardDescription(String name) throws CardNotFoundException{
+    public String getCardDescription(String name) throws CardNotFoundException{     // Zwraca z kolekcji opis karty
         for (Card card: currentCardList){
            if (card.getName().equals(name)) return card.getCardDescription();
         }
@@ -55,7 +56,7 @@ public class DatabaseClient {
         return cardCollection.getCardNames();
     }
     
-    public String[] getCardNamesArrayContaining(String text){
+    public String[] getCardNamesArrayContaining(String text){                   // Zwraca z kolekcji posortowana tablice kart zawierajacych wpisana fraze
         currentCardList = cardCollection.getCardsContaining(text);
         String[] list_tab = new String[currentCardList.size()];
         int i=0;
@@ -67,7 +68,7 @@ public class DatabaseClient {
         return list_tab;
     }
     
-    public Card getCardWithName(String name) throws CardNotFoundException{
+    public Card getCardWithName(String name) throws CardNotFoundException{  // Zwraca kolekcji kartę o podanej nazwie jako obiekt klasy Card
 
         for (Card card: currentCardList){
             if (card.getName().equals(name)) return card;
@@ -75,20 +76,19 @@ public class DatabaseClient {
         throw new CardNotFoundException("Nie znaleziono karty");
     }
     
-    public Image GetImage(Card card) throws CardNotFoundException {
+    public Image GetImage(Card card) throws CardNotFoundException {         // Zwraca obrazek karty
         Image image = null;
-        HashSet<Integer> muIds = card.getMuIDs();
-        for(Integer cardID : muIds){ 
+        HashSet<Integer> muIds = card.getMuIDs();                           // Lista muID danej karty
+        for(Integer cardID : muIds){                                        // Niektore obrazki sa niepoprawne, wiec iterujemy, dopoki nie znajdziemy poprawnego
             //System.out.println("Trying: "+ Integer.toString(cardID));
             if (cardID == 0) continue;
             try {
-                URL url = new URL( "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid="+Integer.toString(cardID)+"&type=card");
+                URL url = new URL( "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid="+Integer.toString(cardID)+"&type=card");      // Dostep do bazy Gatherer
                 image = ImageIO.read(url);
-                //System.out.println("http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid="+Integer.toString(cardID)+"&type=card");
             } catch (IOException e) {
                 System.out.println("Shieeeeeeeeeeeeeeeet");
             }
-            if (cardID != 0){
+            if (cardID != 0){                                               // Jezeli zostal znaleziony poprawny obrazek to konczymy iteracje
                 break;
             }
         }

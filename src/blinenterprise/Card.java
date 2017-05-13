@@ -3,11 +3,11 @@ package blinenterprise;
 import java.util.Collection;
 import java.util.HashSet;
 
-public class Card {
+public class Card {                                         // Klasa card przechowuje parametry pojedynczej karty
     private int power, toughness, cmc;
     private String name, manacost, cardtext, cardtype;
-    private HashSet<String> colors;
-    private HashSet<Integer> muIDs;
+    private HashSet<String> colors;                         // Karta moze miec wiele kolorow
+    private HashSet<Integer> muIDs;                         // muID to identyfikator dostepu do bazy danych Gatherer dla uzyskania obrazka karty
     
     public Card() {
         muIDs = new HashSet<>();
@@ -66,7 +66,7 @@ public class Card {
         return cmc;
     }
     
-    public void calculateCmc(){
+    public void calculateCmc(){                                     // CMC (Converted Mana Cost) to suma kosztow many na karcie
         String manacost = this.getManacost();
         String grey = Character.toString(manacost.charAt(0));
         this.cmc = Integer.parseInt(grey) + manacost.length()-1;
@@ -116,7 +116,7 @@ public class Card {
         this.cardtype = cardtype;
     } 
     
-    public void printCard(){
+    public void printCard(){                                       // Funkcja testowa
         System.out.println("Name: " + name);
         System.out.println("MuIds: " + muIDs);
         System.out.println("Type: " + cardtype);
@@ -127,7 +127,7 @@ public class Card {
         System.out.println("Text: "+cardtext);
     }
     
-    public String getCardDescription(){
+    public String getCardDescription(){                            // Zwraca jako string parametry karty
         return ("Name: " + name + "\n" + 
                 "Type: " + cardtype + "\n" + 
                 "Manacost: " + manacost + "\n" +

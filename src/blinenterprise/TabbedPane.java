@@ -3,7 +3,7 @@ package blinenterprise;
 import javax.swing.JList;
 import javax.swing.JTabbedPane;
 
-public class TabbedPane extends JTabbedPane {
+public class TabbedPane extends JTabbedPane {                                   // Klasa jest rozszerzeniem JTabbedPane przeystosowanych do wyswietlania naszych obiektow
 
     private JList creatures, instants, sorceries, lands, enchantments, artifacts, planeswalkers, other;
     
@@ -12,7 +12,7 @@ public class TabbedPane extends JTabbedPane {
         //loadLists();
     }
     
-    public void loadLists(Deck deck){
+    public void loadLists(Deck deck){                                           // Inicjaluje listy TabbedPane'u                 
         if (deck != null){
             creatures.setListData(deck.getCreatures());
             instants.setListData(deck.getInstants());
@@ -25,7 +25,7 @@ public class TabbedPane extends JTabbedPane {
         }
     }
     
-    public void creatureSelected(javax.swing.event.ListSelectionEvent evt){
+    public void creatureSelected(javax.swing.event.ListSelectionEvent evt){     // Bardzo duzo fukcji wyswietlajace karty z roznych zakladek
         try{        
             if (!evt.getValueIsAdjusting()) {//This line prevents double events
                 Interface i = (Interface)this.getRootPane().getParent();
@@ -121,7 +121,7 @@ public class TabbedPane extends JTabbedPane {
         }
     }
         
-    public TabbedPane() {
+    public TabbedPane() {                                                       // Konstruktor inicjalizujacy listy dla zakladek
         super();
         this.creatures = new JList();
         creatures.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
@@ -171,7 +171,7 @@ public class TabbedPane extends JTabbedPane {
                otherSelected(evt);
             }
         });
-        this.addTab("Creatures", creatures);
+        this.addTab("Creatures", creatures);                                    // Dodawnie zainicjowanych zakladek
         this.addTab("Instants", instants);
         this.addTab("Sorceries", sorceries);
         this.addTab("Lands", lands);

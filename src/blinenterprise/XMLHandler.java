@@ -7,7 +7,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-public class XMLHandler extends DefaultHandler{
+public class XMLHandler extends DefaultHandler{                                 // Klasa okresla sposob parsowania pliku XML z baza danych
 
     boolean bname;
     boolean bmuId;
@@ -18,7 +18,7 @@ public class XMLHandler extends DefaultHandler{
     boolean bpt;
     boolean btablerow;
     boolean btext;
-    Card card;
+    Card card;                                                                  // Wyciagniete zostana wszystkie parametry kart
     Collection<String> muIDs;
     HashSet<Card> cards;
 

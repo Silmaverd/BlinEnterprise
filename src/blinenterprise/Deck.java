@@ -24,10 +24,9 @@ class CardStructure{
             this.amount = 1;
         }
         
-        public CardStructure(String s) throws CardNotFoundException{
+        public CardStructure(String s) throws CardNotFoundException{        // Ta klasa przechowuje karte i ilosc jej powtorzen
             s = s.trim();
-            String split[] = s.split("&");
-            //System.out.println("XD" + s + "   " + Integer.toString(split.length));//+ split[0] + "   " + split[1]);
+            String split[] = s.split("&");                                  // Separator dla naszego formatu
             DatabaseClient dbClient = new DatabaseClient();
             card = dbClient.getCardWithName(split[1]);
             amount = Integer.parseInt(split[0]);
@@ -60,8 +59,8 @@ public class Deck {
     private Deck sideboard;
     private boolean isSaved;
 
-    public Deck(String name, boolean side) {
-        this.creatures = new Vector<>();
+    public Deck(String name, boolean side) {                // Klasa deck zawiera vecotry dla kazdego typu karty
+        this.creatures = new Vector<>();                    // To rozwiazanie ulatwia sortowanie
         this.instants = new Vector<>();
         this.sorceries = new Vector<>();
         this.lands = new Vector<>();
@@ -70,13 +69,13 @@ public class Deck {
         this.planeswalkers = new Vector<>();
         this.other = new Vector<>();
         this.name = name;
-        this.isSaved = false;
-        this.path = null;
+        this.isSaved = false;                               // Czy wszystkie modyfikacje zostaly zapisane
+        this.path = null;                                   // Sciezka do pliku zapisu decku
         this.size = 0;
-        if (side == true) sideboard = new Deck("", false);
+        if (side == true) sideboard = new Deck("", false);  // Sideboard jest traktowany jako osobny deck ; parametr false oznacza, ze sideboard nie bedzie mial swojego sideboardu
     }
     
-    public void addCard(Card card){
+    public void addCard(Card card){                                             // Iteracja po wszyskich listach w decku, w celu dodania karty (ewentualnie oznaczenia powtorzenia)
         isSaved = false;
         if (card.getCardtype().toUpperCase().contains("INSTANT")){
             for(CardStructure cs : instants){
@@ -154,7 +153,7 @@ public class Deck {
         this.size++;
     }
     
-    public void clear(){
+    public void clear(){                   // Reset parametrow Decku
         creatures.clear();
         instants.clear();
         sorceries.clear();
@@ -186,7 +185,7 @@ public class Deck {
         else return 0;
     }
     
-    public void removeCard(Card card) throws CardNotFoundException{
+    public void removeCard(Card card) throws CardNotFoundException{                 // Iteracja po wszystkich listach w decku, w celu usuniecia karty
         isSaved = false;
         if (card.getCardtype().toUpperCase().contains("INSTANT")){
             for(CardStructure cs : instants){
@@ -275,9 +274,9 @@ public class Deck {
         this.sideboard.removeCard(card);
         isSaved = false;
     }
-    
-    private void writeToFile(FileWriter fw) throws IOException{
-        for (CardStructure cs : creatures) fw.write(cs.getSaveData());
+        
+    private void writeToFile(FileWriter fw) throws IOException{                     // Funkcja zapisuje poszczegolne elementu decku dodajac formatowanie
+        for (CardStructure cs : creatures) fw.write(cs.getSaveData());  
         fw.write("@\n");
         for (CardStructure cs : instants) fw.write(cs.getSaveData());
         fw.write("@\n");
@@ -295,7 +294,7 @@ public class Deck {
         fw.flush();
     }
     
-    public void save() throws IOException{
+    public void save() throws IOException{                                          // Zapisywanie decku do pliku
         if (path == null){
             int option;
             JFileChooser filechooser = new JFileChooser();
@@ -322,7 +321,7 @@ public class Deck {
         this.isSaved = true;
     }
     
-    private void loadDeck(String content) throws CardNotFoundException{
+    private void loadDeck(String content) throws CardNotFoundException{               // Funkcja wczytuje Deck w postaci raw w naszym formacie i interpretuje go
         String splitArray[] = content.split("@");
         String splitStructures[];
         splitStructures = splitArray[0].split("#");
@@ -343,14 +342,14 @@ public class Deck {
         for (String s : splitStructures) if (s.contains("&")) other.add(new CardStructure(s));
     }
     
-    public void load() throws IOException, CardNotFoundException{
-        if (!isSaved){
+    public void load() throws IOException, CardNotFoundException{                       // Wczytywanie decku z pliku
+        if (!isSaved){                                                                  // Sprawdzenie, czy nie ma niezapisanych modyfikacji akualnie edytowanego decku
             Object[] options = {"Save", "Discard", "Cancel"};
             int n = JOptionPane.showOptionDialog(new JFrame(), "Save changes?", "Warning", JOptionPane.YES_NO_CANCEL_OPTION, 
                     JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
             switch(n){
                 case 0:
-                    save();
+                    save();                                                             // Ewentualna mozliwosc zapisu
                     break;
                 case 1:
                     break;
@@ -358,7 +357,7 @@ public class Deck {
                     return;
             }         
         }
-        int option;
+        int option;                                                                             // File chooser do wybrania pliku
             JFileChooser filechooser = new JFileChooser();
             FileNameExtensionFilter filter = new FileNameExtensionFilter("ODE Files", new String[] {"ode"});
             filechooser.setFileFilter(filter);
@@ -372,7 +371,7 @@ public class Deck {
         String content = String.join("\n", Files.readAllLines(file.toPath()));
         String splitArray[] = content.split("%");
         this.clear();
-        loadDeck(splitArray[0]);
+        loadDeck(splitArray[0]);                                                                // Zaladowanie wszystkich parametrow
         sideboard.loadDeck(splitArray[1]);
         name = splitArray[2].trim();
         size = Integer.parseInt(splitArray[3].trim());
@@ -440,7 +439,7 @@ public class Deck {
         this.isSaved = isSaved;
     }
     
-    private String[] getAsArray(){
+    private String[] getAsArray(){                                                  // Zwraca deck lub sideboard jako tablice
         ArrayList<String> cardlist = new ArrayList();
         for (CardStructure c: creatures) cardlist.add(c.amount + "x   "+c.card.getName());
         for (CardStructure c: instants) cardlist.add(c.amount + "x   "+c.card.getName());
@@ -459,10 +458,10 @@ public class Deck {
         return array;
     }
     
-    public String[] getDeckAsArray(){
+    public String[] getDeckAsArray(){                                   // Zwraca caly deck w postaci tablicy
         String[] first = this.getAsArray();
         String[] second = this.sideboard.getAsArray();
-        String[] all = new String[(first.length + second.length+3)];
+        String[] all = new String[(first.length + second.length+3)];    // Dlugosc tablicy to ilosc roznych kart w decku + sideboardzie
         System.out.println(all.length);
         int i=1;
         all[0] = new String("Main:");

@@ -2,7 +2,7 @@
 package blinenterprise;
 
 
-public class CardNotFoundException extends Throwable{
+public class CardNotFoundException extends Throwable{       // Wyjatek wyrzucany, gdy podana karta nie zostala znaleziona
     public CardNotFoundException(){
         super();
     }
