@@ -473,5 +473,17 @@ public class Deck {
         for (i=i; i<all.length; i++) {all[i] = second[k]; k++;}
         return all;
     }
- 
+    
+    public Vector<CardStructure> getAllCardsAsVector(){
+        Vector<CardStructure> all = new Vector<>();
+        all.addAll(creatures);
+        all.addAll(instants);
+        all.addAll(sorceries);
+        all.addAll(enchantments);
+        all.addAll(artifacts);
+        all.addAll(lands);
+        all.addAll(planeswalkers);
+        all.addAll(other);
+        return all;
+    }
 }

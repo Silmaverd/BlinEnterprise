@@ -1,6 +1,7 @@
 package blinenterprise;
 
 import java.awt.Image;
+import java.util.Vector;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -39,6 +40,7 @@ public class DeckAnalyzer extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         card_description_field = new javax.swing.JTextArea();
         ProbabilisticsButton = new javax.swing.JButton();
+        ChartPanel = new javax.swing.JPanel();
 
         setPreferredSize(new java.awt.Dimension(1618, 762));
 
@@ -60,6 +62,17 @@ public class DeckAnalyzer extends javax.swing.JPanel {
             }
         });
 
+        javax.swing.GroupLayout ChartPanelLayout = new javax.swing.GroupLayout(ChartPanel);
+        ChartPanel.setLayout(ChartPanelLayout);
+        ChartPanelLayout.setHorizontalGroup(
+            ChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 274, Short.MAX_VALUE)
+        );
+        ChartPanelLayout.setVerticalGroup(
+            ChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -74,9 +87,11 @@ public class DeckAnalyzer extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(CardImage, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(203, 203, 203)
-                        .addComponent(ProbabilisticsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ProbabilisticsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ChartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(602, Short.MAX_VALUE))
+                .addContainerGap(511, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -87,9 +102,12 @@ public class DeckAnalyzer extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 635, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(CardImage, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ProbabilisticsButton))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(ProbabilisticsButton)
+                                .addGap(18, 18, 18)
+                                .addComponent(ChartPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(CardImage, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(41, Short.MAX_VALUE))
@@ -101,7 +119,7 @@ public class DeckAnalyzer extends javax.swing.JPanel {
         probabilisticsWindow.setVisible(true);
     }//GEN-LAST:event_ProbabilisticsButtonActionPerformed
 
-    public void showCard(Card currentCard){
+    public void showCard(Card currentCard){                 // Wyswietla obrazek karty w jLabel
         Image cardImage;
         try {
             cardImage = dbClient.GetImage(currentCard);
@@ -113,9 +131,27 @@ public class DeckAnalyzer extends javax.swing.JPanel {
             
         }       
     }
+    
+    public void PaintChart(){                                               // Funkcja rysuje wykres mana-costu
+        int totalMC = 0, R = 0, G = 0, U = 0, B = 0, W = 0, C = 0;          // Symole reprezentujace kolory many
+        Vector<CardStructure> cardsInDeck = currentDeck.getAllCardsAsVector();
+        for (CardStructure cs : cardsInDeck){                               // Zliczanie poszczegolnycb symboli many
+            for(int i=0; i<cs.card.getManacost().length(); i++){
+                if (cs.card.getManacost().charAt(i)== 'R') R++;
+                if (cs.card.getManacost().charAt(i)== 'G') G++;
+                if (cs.card.getManacost().charAt(i)== 'B') B++;
+                if (cs.card.getManacost().charAt(i)== 'U') U++;
+                if (cs.card.getManacost().charAt(i)== 'W') W++;
+                if (cs.card.getManacost().charAt(i)== 'C') C++;
+            }
+        }
+        totalMC = R + G + B + U + W;
+        //DefaultPieDataet pieSet = new DefaultPieDataset();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel CardImage;
+    private javax.swing.JPanel ChartPanel;
     private javax.swing.JList<String> DeckList;
     private javax.swing.JLabel DeckNameLabel;
     private javax.swing.JButton ProbabilisticsButton;
