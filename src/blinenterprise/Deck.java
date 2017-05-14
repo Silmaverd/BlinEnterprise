@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Vector;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -48,7 +49,7 @@ class CardStructure{
         }
     }
 
-public class Deck {
+public class Deck{
       
     private Vector<CardStructure> creatures, instants, sorceries, lands, enchantments, artifacts, planeswalkers, other;
     private String name;
@@ -72,6 +73,24 @@ public class Deck {
         this.size = 0;
         if (side == true) sideboard = new Deck("", false);  // Sideboard jest traktowany jako osobny deck ; parametr false oznacza, ze sideboard nie bedzie mial swojego sideboardu
     }
+
+    public Deck(Deck anotherDeck) {                         // Konstruktor kopiujacy
+        this.creatures = anotherDeck.creatures;
+        this.instants = anotherDeck.instants;
+        this.sorceries = anotherDeck.sorceries;
+        this.lands = anotherDeck.lands;
+        this.enchantments = anotherDeck.enchantments;
+        this.artifacts = anotherDeck.artifacts;
+        this.planeswalkers = anotherDeck.planeswalkers;
+        this.other = anotherDeck.other;
+        this.name = anotherDeck.name;
+        this.size = anotherDeck.size;
+        this.path = anotherDeck.path;
+        this.sideboard = anotherDeck.sideboard;
+        this.isSaved = anotherDeck.isSaved;
+    }
+    
+    
     
     public void addCard(Card card){                                             // Iteracja po wszyskich listach w decku, w celu dodania karty (ewentualnie oznaczenia powtorzenia)
         isSaved = false;
@@ -292,7 +311,7 @@ public class Deck {
         fw.flush();
     }
     
-    public void save() throws IOException{                                          // Zapisywanie decku do pliku
+    public boolean save() throws IOException{                                          // Zapisywanie decku do pliku
         if (path == null){
             int option;
             JFileChooser filechooser = new JFileChooser();
@@ -304,7 +323,7 @@ public class Deck {
                 path = filechooser.getSelectedFile().getAbsolutePath();
             }
         }
-        if (path == null) return;
+        if (path == null) return false;
         File file = new File(path);
         file.createNewFile();
         FileWriter fw = new FileWriter(file);
@@ -317,6 +336,7 @@ public class Deck {
         fw.flush();
         fw.close();
         this.isSaved = true;
+        return true;
     }
     
     private void loadDeck(String content) throws CardNotFoundException{               // Funkcja wczytuje Deck w postaci raw w naszym formacie i interpretuje go
@@ -471,7 +491,7 @@ public class Deck {
         return all;
     }
     
-    public Vector<CardStructure> getAllCardsAsVector(){
+    public Vector<CardStructure> getMainAsVector(){                         // Zwraca main-deck w postaci Vectoru struktur kart
         Vector<CardStructure> all = new Vector<>();
         all.addAll(creatures);
         all.addAll(instants);
@@ -481,6 +501,11 @@ public class Deck {
         all.addAll(lands);
         all.addAll(planeswalkers);
         all.addAll(other);
+        return all;
+    }
+    
+    public Vector<CardStructure> getSideboardAsVector(){                     // Zwraca sideboard w postaci Vectoru struktur kart
+        Vector<CardStructure> all = new Vector<>();
         all.addAll(sideboard.creatures);
         all.addAll(sideboard.instants);
         all.addAll(sideboard.sorceries);
@@ -491,4 +516,41 @@ public class Deck {
         all.addAll(sideboard.other);
         return all;
     }
+    
+    public Vector<CardStructure> getAllCardsAsVector(){                     // Zwraca main-deck i sideboard w postaci struktur kart
+        Vector<CardStructure> all = new Vector<>();
+        all.addAll(getMainAsVector());
+        all.addAll(getSideboardAsVector());
+        return all;
+    }
+    
+    public ArrayList<Card> getDeckAsArrayListWithRepeats(){                      // Zwraca main deck w postaci ArrayListy powtorkami kart
+        ArrayList hs = new ArrayList();                                         // To znaczy, ze jezeli w decku jest kilka sztuk tej samej karty, pojawi sie ona
+        for (CardStructure cs : creatures)                                      // na liscie wielokrotnie
+            for (int i=0; i<cs.amount; i++)
+                hs.add(cs.card);
+        for (CardStructure cs : instants)
+            for (int i=0; i<cs.amount; i++)
+                hs.add(cs.card);
+        for (CardStructure cs : sorceries)
+            for (int i=0; i<cs.amount; i++)
+                hs.add(cs.card);
+        for (CardStructure cs : artifacts)
+            for (int i=0; i<cs.amount; i++)
+                hs.add(cs.card);
+        for (CardStructure cs : enchantments)
+            for (int i=0; i<cs.amount; i++)
+                hs.add(cs.card);
+        for (CardStructure cs : planeswalkers)
+            for (int i=0; i<cs.amount; i++)
+                hs.add(cs.card);
+        for (CardStructure cs : lands) 
+            for (int i=0; i<cs.amount; i++)
+                hs.add(cs.card);
+        for (CardStructure cs : other)
+            for (int i=0; i<cs.amount; i++)
+                hs.add(cs.card);
+        return hs;
+    }
+            
 }

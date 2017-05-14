@@ -1,6 +1,8 @@
 package blinenterprise;
 
 import java.awt.Image;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -68,7 +70,9 @@ public class Interface extends javax.swing.JFrame {
         BackButton = new javax.swing.JToggleButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        ProbabilisticsMenu = new javax.swing.JMenuItem();
+        SampleHandMenu = new javax.swing.JMenuItem();
+        ExitMenu = new javax.swing.JMenuItem();
         deckMenu = new javax.swing.JMenu();
         newDeck = new javax.swing.JMenuItem();
         saveDeck = new javax.swing.JMenuItem();
@@ -288,11 +292,33 @@ public class Interface extends javax.swing.JFrame {
             }
         });
 
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
+        jMenu1.setText("Application");
 
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
+        ProbabilisticsMenu.setText("Probabilistics");
+        ProbabilisticsMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ProbabilisticsMenuActionPerformed(evt);
+            }
+        });
+        jMenu1.add(ProbabilisticsMenu);
+
+        SampleHandMenu.setText("Sample hand");
+        SampleHandMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SampleHandMenuActionPerformed(evt);
+            }
+        });
+        jMenu1.add(SampleHandMenu);
+
+        ExitMenu.setText("Exit");
+        ExitMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ExitMenuActionPerformed(evt);
+            }
+        });
+        jMenu1.add(ExitMenu);
+
+        jMenuBar1.add(jMenu1);
 
         deckMenu.setText("Deck");
 
@@ -373,6 +399,7 @@ public class Interface extends javax.swing.JFrame {
         DeckAnalyzerPane.setVisible(false);
         StartMenu.setVisible(true);
         BackButton.setVisible(false);
+        BackButton.setSelected(false);
     }//GEN-LAST:event_BackButtonActionPerformed
 
     private void CardNameInputLineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CardNameInputLineActionPerformed
@@ -497,6 +524,96 @@ public class Interface extends javax.swing.JFrame {
         DeckAnalyzer.initizlize(currentDeck, dbClient);
     }//GEN-LAST:event_DeckAnalyzerButtonActionPerformed
 
+    private void ProbabilisticsMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProbabilisticsMenuActionPerformed
+        JFrame probabilisticsWindow = new Probablilistics();
+        probabilisticsWindow.setVisible(true);
+        ProbabilisticsMenu.setEnabled(false);
+        probabilisticsWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        probabilisticsWindow.setTitle("MTG Deck Editor");
+        probabilisticsWindow.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent we) {}
+
+            @Override
+            public void windowClosing(WindowEvent we) {}
+
+            @Override
+            public void windowClosed(WindowEvent we) {
+                ProbabilisticsMenu.setEnabled(true);
+            }
+
+            @Override
+            public void windowIconified(WindowEvent we) {}
+
+            @Override
+            public void windowDeiconified(WindowEvent we) {}
+
+            @Override
+            public void windowActivated(WindowEvent we) {}
+
+            @Override
+            public void windowDeactivated(WindowEvent we) {}
+        });    
+    }//GEN-LAST:event_ProbabilisticsMenuActionPerformed
+
+    private void SampleHandMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SampleHandMenuActionPerformed
+        if (currentDeck.getSize() < 7) return;
+        SampleHandFrame sampleHandWindow = new SampleHandFrame();
+        sampleHandWindow.setVisible(true);
+        SampleHandMenu.setEnabled(false);
+        sampleHandWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        sampleHandWindow.setTitle("MTG Deck Editor");
+        sampleHandWindow.loadDeckAndDB(currentDeck, dbClient);
+        sampleHandWindow.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent we) {}
+
+            @Override
+            public void windowClosing(WindowEvent we) {}
+
+            @Override
+            public void windowClosed(WindowEvent we) {
+                SampleHandMenu.setEnabled(true);
+            }
+
+            @Override
+            public void windowIconified(WindowEvent we) {}
+
+            @Override
+            public void windowDeiconified(WindowEvent we) {}
+
+            @Override
+            public void windowActivated(WindowEvent we) {}
+
+            @Override
+            public void windowDeactivated(WindowEvent we) {}
+        });
+    }//GEN-LAST:event_SampleHandMenuActionPerformed
+
+    private void ExitMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitMenuActionPerformed
+        if (currentDeck == null) this.dispose();
+        if (!currentDeck.getIsSaved()){                                  // Sprawdzenie, czy nie ma niezapisanych modyfikacji akualnie edytowanego decku
+            Object[] options = {"Save", "Discard", "Cancel"};
+            int n = JOptionPane.showOptionDialog(new JFrame(), "Save changes?", "Warning", JOptionPane.YES_NO_CANCEL_OPTION, 
+                    JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+            switch(n){
+                case 0:
+                    try {
+                        if (!currentDeck.save()){                                                             // Ewentualna mozliwosc zapisu
+                            return;
+                        }
+                    } catch (IOException ex) {}
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    return;
+            }         
+        }
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
+    }//GEN-LAST:event_ExitMenuActionPerformed
+
     public void setCurrentCard(Card card){
         currentCard = card;
         showCurrentCard();
@@ -558,6 +675,9 @@ public class Interface extends javax.swing.JFrame {
     private javax.swing.JButton DeckEditorButton;
     private javax.swing.JPanel DeckEditorPanel;
     private javax.swing.JTabbedPane DeckTabbedPanel;
+    private javax.swing.JMenuItem ExitMenu;
+    private javax.swing.JMenuItem ProbabilisticsMenu;
+    private javax.swing.JMenuItem SampleHandMenu;
     private javax.swing.JPanel StartMenu;
     private javax.swing.JButton addCardButton;
     private javax.swing.JButton addCardToSideboardButton;
@@ -567,7 +687,6 @@ public class Interface extends javax.swing.JFrame {
     private javax.swing.JTextField deckNameField;
     private javax.swing.JLabel deckSizeLabel;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
