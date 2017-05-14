@@ -513,7 +513,7 @@ public class Interface extends javax.swing.JFrame {
             card_description_field.setText(dbClient.getCardDescription(currentCard.getName()));
         } catch (CardNotFoundException ex) {
             CardNameInputLine.setText("Card not found");
-        }       
+        }   
     }
     
     public static void main(String args[]) {

@@ -4,10 +4,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Vector;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -342,7 +340,7 @@ public class Deck {
         for (String s : splitStructures) if (s.contains("&")) other.add(new CardStructure(s));
     }
     
-    public void load() throws IOException, CardNotFoundException{                       // Wczytywanie decku z pliku
+    public void load() throws IOException, CardNotFoundException{                       // Wczytywanie decku z pliku w formacie .ODE
         if (!isSaved){                                                                  // Sprawdzenie, czy nie ma niezapisanych modyfikacji akualnie edytowanego decku
             Object[] options = {"Save", "Discard", "Cancel"};
             int n = JOptionPane.showOptionDialog(new JFrame(), "Save changes?", "Warning", JOptionPane.YES_NO_CANCEL_OPTION, 
@@ -378,7 +376,7 @@ public class Deck {
         sideboard.size = Integer.parseInt(splitArray[4].trim());
         isSaved = true;
     }
-
+    
     public Deck getSideboard() {
         return sideboard;
     }
