@@ -22,6 +22,7 @@ public class Interface extends javax.swing.JFrame {
     private Deck currentDeck;
     private TabbedPane deckPane;
     private TabbedPane sideboardPane;
+    private JFrame filterFrame;
     
     public Interface() {
         initComponents();
@@ -44,6 +45,43 @@ public class Interface extends javax.swing.JFrame {
         DeckTabbedPanel.addTab("Deck", deckPane);
         DeckTabbedPanel.addTab("Sideboard", sideboardPane);
         DeckAnalyzer.initizlize(currentDeck, dbClient);
+        
+        initializeFilterCardsFrame();
+    }
+    
+    public void initializeFilterCardsFrame() {
+        filterFrame = new FilterCardsFrame(dbClient);
+        filterFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        filterFrame.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+                openFilterframe.setEnabled(true);
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+            }
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -524,41 +562,8 @@ public class Interface extends javax.swing.JFrame {
     }//GEN-LAST:event_DeckAnalyzerButtonActionPerformed
 
     private void openFilterframeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFilterframeActionPerformed
-        JFrame filterFrame = new FilterCardsFrame();
         filterFrame.setVisible(true);
         openFilterframe.setEnabled(false);
-        
-        filterFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        filterFrame.addWindowListener(new WindowListener() {
-            @Override
-            public void windowOpened(WindowEvent e) {
-            }
-
-            @Override
-            public void windowClosing(WindowEvent e) {
-            }
-
-            @Override
-            public void windowClosed(WindowEvent e) {
-                openFilterframe.setEnabled(true);
-            }
-
-            @Override
-            public void windowIconified(WindowEvent e) {
-            }
-
-            @Override
-            public void windowDeiconified(WindowEvent e) {
-            }
-
-            @Override
-            public void windowActivated(WindowEvent e) {
-            }
-
-            @Override
-            public void windowDeactivated(WindowEvent e) {
-            }
-        });
     }//GEN-LAST:event_openFilterframeActionPerformed
 
     public void setCurrentCard(Card card){

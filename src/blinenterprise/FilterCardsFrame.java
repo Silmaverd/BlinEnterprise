@@ -6,9 +6,11 @@ import javax.swing.JCheckBox;
 
 public class FilterCardsFrame extends javax.swing.JFrame {
 
-    public FilterCardsFrame() {
+    DatabaseClient database;
+            
+    public FilterCardsFrame(DatabaseClient db) {
         initComponents();
-        Initialize();
+        initialize(db);
     }
 
     @SuppressWarnings("unchecked")
@@ -96,8 +98,8 @@ public class FilterCardsFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    public void Initialize(){       
-        /* Init card color selection Listener*/
+    public void initialize(DatabaseClient db) {       
+        /* Init card color selection Listener */
         ActionListener actionListenerCardFilter = new FilterCardPropertiesActionHandler(blackCardRadioButton, 
                 blueCardRadioButton, greenCardRadioButton, redCardRadioButton, 
                 whiteCardRadioButton, colorlessCardRadioButton);
@@ -108,39 +110,9 @@ public class FilterCardsFrame extends javax.swing.JFrame {
         redCardRadioButton.addActionListener(actionListenerCardFilter);
         whiteCardRadioButton.addActionListener(actionListenerCardFilter);
         colorlessCardRadioButton.addActionListener(actionListenerCardFilter);
-    }
-    
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FilterCardsFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FilterCardsFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FilterCardsFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FilterCardsFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FilterCardsFrame().setVisible(true);
-            }
-        });
+        
+        /* Init Database access */
+        database = db;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
