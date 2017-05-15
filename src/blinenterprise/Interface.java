@@ -1,15 +1,22 @@
 package blinenterprise;
 
 import java.awt.Image;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 public class Interface extends javax.swing.JFrame {
 
@@ -18,10 +25,19 @@ public class Interface extends javax.swing.JFrame {
     private Deck currentDeck;
     private TabbedPane deckPane;
     private TabbedPane sideboardPane;
+    private JFrame filterFrame;
     
     public Interface() {
         initComponents();
         initialize();
+    }
+
+    public JList<String> getCardList() {
+        return CardList;
+    }
+
+    public JTextField getCardNameInputLine() {
+        return CardNameInputLine;
     }
     
     public void initialize(){
@@ -40,6 +56,43 @@ public class Interface extends javax.swing.JFrame {
         DeckTabbedPanel.addTab("Deck", deckPane);
         DeckTabbedPanel.addTab("Sideboard", sideboardPane);
         DeckAnalyzer.initizlize(currentDeck, dbClient);
+        
+        initializeFilterCardsFrame();
+    }
+    
+    public void initializeFilterCardsFrame() {
+        filterFrame = new FilterCardsFrame(dbClient, this);
+        filterFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        filterFrame.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+                openFilterframe.setEnabled(true);
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+            }
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -65,6 +118,7 @@ public class Interface extends javax.swing.JFrame {
         removeCardButton = new javax.swing.JButton();
         addCardToSideboardButton = new javax.swing.JButton();
         removeCardFromSideboardButton = new javax.swing.JButton();
+        openFilterframe = new javax.swing.JButton();
         DeckAnalyzerPane = new javax.swing.JPanel();
         DeckAnalyzer = new blinenterprise.DeckAnalyzer();
         BackButton = new javax.swing.JToggleButton();
@@ -214,6 +268,13 @@ public class Interface extends javax.swing.JFrame {
             }
         });
 
+        openFilterframe.setText("Filters");
+        openFilterframe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openFilterframeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout DeckEditorPanelLayout = new javax.swing.GroupLayout(DeckEditorPanel);
         DeckEditorPanel.setLayout(DeckEditorPanelLayout);
         DeckEditorPanelLayout.setHorizontalGroup(
@@ -235,10 +296,10 @@ public class Interface extends javax.swing.JFrame {
                             .addComponent(addCardButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(43, 43, 43)
                         .addComponent(currentDeckPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(74, 74, 74))
+                        .addGap(74, 113, Short.MAX_VALUE))
                     .addGroup(DeckEditorPanelLayout.createSequentialGroup()
                         .addComponent(CardNameInputLine, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 1220, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         DeckEditorPanelLayout.setVerticalGroup(
             DeckEditorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,7 +311,8 @@ public class Interface extends javax.swing.JFrame {
                     .addComponent(currentDeckPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 656, Short.MAX_VALUE)
                     .addGroup(DeckEditorPanelLayout.createSequentialGroup()
-                        .addGap(81, 81, 81)
+                        .addComponent(openFilterframe)
+                        .addGap(62, 62, 62)
                         .addComponent(addCardButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(DeckEditorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -265,6 +327,7 @@ public class Interface extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(removeCardFromSideboardButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(26, Short.MAX_VALUE))
+
         );
 
         javax.swing.GroupLayout DeckAnalyzerPaneLayout = new javax.swing.GroupLayout(DeckAnalyzerPane);
@@ -510,6 +573,7 @@ public class Interface extends javax.swing.JFrame {
         DeckAnalyzer.initizlize(currentDeck, dbClient);
     }//GEN-LAST:event_DeckAnalyzerButtonActionPerformed
 
+
     private void ProbabilisticsMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProbabilisticsMenuActionPerformed
         JFrame probabilisticsWindow = new Probablilistics();
         probabilisticsWindow.setVisible(true);
@@ -680,6 +744,7 @@ public class Interface extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JMenuItem loadDeck;
     private javax.swing.JMenuItem newDeck;
+    private javax.swing.JButton openFilterframe;
     private javax.swing.JButton removeCardButton;
     private javax.swing.JButton removeCardFromSideboardButton;
     private javax.swing.JMenuItem saveDeck;

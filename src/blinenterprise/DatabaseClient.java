@@ -56,8 +56,24 @@ public class DatabaseClient {
         return cardCollection.getCardNames();
     }
     
+    public CardSearchFilter getCardFilterMenager(){
+        return cardCollection.getCardFilterMenager();
+    }
+    
     public String[] getCardNamesArrayContaining(String text){                   // Zwraca z kolekcji posortowana tablice kart zawierajacych wpisana fraze
         currentCardList = cardCollection.getCardsContaining(text);
+        String[] list_tab = new String[currentCardList.size()];
+        int i=0;
+        for (Card card : currentCardList){
+            list_tab[i] = card.getName();
+            i++;
+        }
+        Arrays.sort(list_tab);
+        return list_tab;
+    }
+    
+    public String[] getFilteredCardNames(String text){                         // Zwraca z kolekcji posortowana tablice kart zawierajacych wpisana fraze
+        currentCardList = cardCollection.applySearchFilters(text);              // Która dodatkowo przeszła przez proces filtrowania
         String[] list_tab = new String[currentCardList.size()];
         int i=0;
         for (Card card : currentCardList){

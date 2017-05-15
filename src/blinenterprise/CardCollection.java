@@ -7,9 +7,15 @@ import java.util.HashSet;
 public class CardCollection {                               // Kolekcja wczytanych kart
                                                             // Ta klasa zarzadza kolekcja, ale dostep do niej ma tylko klient bazy danych
     private Collection<Card> cards;
+    private CardSearchFilter cardFilterMenager;
+
+    public CardSearchFilter getCardFilterMenager() {
+        return cardFilterMenager;
+    }
     
     public CardCollection(Collection<Card> c){
         cards = c;
+        cardFilterMenager = new CardSearchFilter();
     }
     
     public void setCollection(Collection<Card> col){
@@ -37,8 +43,6 @@ public class CardCollection {                               // Kolekcja wczytany
         return getCardWithName(name).getCardDescription();
     }
     
-
-    
     public String[] getCardNames(){                                                 // Zwraca tablice zawierajaca nazwy wszystkich wczytanych kart
         String[] lista = new String[cards.size()];
         int i=0;
@@ -61,5 +65,12 @@ public class CardCollection {                               // Kolekcja wczytany
             }
         }
         return lista;
+    }
+    
+    public HashSet<Card> applySearchFilters(String text) {
+        if (text.equals("Wyszukaj kartę"))
+            return cardFilterMenager.applyfilters(getCardsContaining(""));
+        
+        return cardFilterMenager.applyfilters(getCardsContaining(text));
     }
 }
