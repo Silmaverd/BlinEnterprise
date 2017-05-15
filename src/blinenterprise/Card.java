@@ -1,6 +1,5 @@
 package blinenterprise;
 
-import java.util.Collection;
 import java.util.HashSet;
 
 public class Card {                                         // Klasa card przechowuje parametry pojedynczej karty
