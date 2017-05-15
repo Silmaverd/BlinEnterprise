@@ -5,12 +5,10 @@ import javax.swing.JCheckBox;
 
 
 public class FilterCardsFrame extends javax.swing.JFrame {
-
-    DatabaseClient database;
             
     public FilterCardsFrame(DatabaseClient db) {
         initComponents();
-        initialize(db);
+        initializeCardPropertiesListener(db);
     }
 
     @SuppressWarnings("unchecked")
@@ -18,26 +16,26 @@ public class FilterCardsFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        greenCardRadioButton = new javax.swing.JCheckBox();
-        redCardRadioButton = new javax.swing.JCheckBox();
-        whiteCardRadioButton = new javax.swing.JCheckBox();
-        colorlessCardRadioButton = new javax.swing.JCheckBox();
-        blackCardRadioButton = new javax.swing.JCheckBox();
-        blueCardRadioButton = new javax.swing.JCheckBox();
+        greenCardCheckBox = new javax.swing.JCheckBox();
+        redCardCheckBox = new javax.swing.JCheckBox();
+        whiteCardCheckBox = new javax.swing.JCheckBox();
+        colorlessCardCheckBox = new javax.swing.JCheckBox();
+        blackCardCheckBox = new javax.swing.JCheckBox();
+        blueCardCheckBox = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        greenCardRadioButton.setText("Zielony");
+        greenCardCheckBox.setText("Zielony");
 
-        redCardRadioButton.setText("Czerwony");
+        redCardCheckBox.setText("Czerwony");
 
-        whiteCardRadioButton.setText("Biały");
+        whiteCardCheckBox.setText("Biały");
 
-        colorlessCardRadioButton.setText("Bezkoloru");
+        colorlessCardCheckBox.setText("Bezkoloru");
 
-        blackCardRadioButton.setText("Czarny");
+        blackCardCheckBox.setText("Czarny");
 
-        blueCardRadioButton.setText("Niebieski");
+        blueCardCheckBox.setText("Niebieski");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -46,20 +44,20 @@ public class FilterCardsFrame extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(blackCardRadioButton)
+                        .addComponent(blackCardCheckBox)
                         .addGap(18, 18, 18)
-                        .addComponent(blueCardRadioButton)
+                        .addComponent(blueCardCheckBox)
                         .addGap(18, 18, 18)
-                        .addComponent(greenCardRadioButton))
+                        .addComponent(greenCardCheckBox))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(redCardRadioButton)
+                        .addComponent(redCardCheckBox)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(colorlessCardRadioButton)))
+                        .addComponent(colorlessCardCheckBox)))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(79, 79, 79)
-                    .addComponent(whiteCardRadioButton)
+                    .addComponent(whiteCardCheckBox)
                     .addContainerGap(93, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
@@ -67,18 +65,18 @@ public class FilterCardsFrame extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(blackCardRadioButton)
-                    .addComponent(blueCardRadioButton)
-                    .addComponent(greenCardRadioButton))
+                    .addComponent(blackCardCheckBox)
+                    .addComponent(blueCardCheckBox)
+                    .addComponent(greenCardCheckBox))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(redCardRadioButton)
-                    .addComponent(colorlessCardRadioButton))
+                    .addComponent(redCardCheckBox)
+                    .addComponent(colorlessCardCheckBox))
                 .addContainerGap(32, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(50, 50, 50)
-                    .addComponent(whiteCardRadioButton)
+                    .addComponent(whiteCardCheckBox)
                     .addContainerGap(30, Short.MAX_VALUE)))
         );
 
@@ -98,30 +96,27 @@ public class FilterCardsFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    public void initialize(DatabaseClient db) {       
-        /* Init card color selection Listener */
-        ActionListener actionListenerCardFilter = new FilterCardPropertiesActionHandler(blackCardRadioButton, 
-                blueCardRadioButton, greenCardRadioButton, redCardRadioButton, 
-                whiteCardRadioButton, colorlessCardRadioButton);
+    public void initializeCardPropertiesListener(DatabaseClient db) {       
+
+        ActionListener actionListenerCardFilter = new FilterCardPropertiesActionHandler(blackCardCheckBox, 
+                blueCardCheckBox, greenCardCheckBox, redCardCheckBox, 
+                whiteCardCheckBox, colorlessCardCheckBox, db);
         
-        blackCardRadioButton.addActionListener(actionListenerCardFilter);
-        blueCardRadioButton.addActionListener(actionListenerCardFilter);
-        greenCardRadioButton.addActionListener(actionListenerCardFilter);
-        redCardRadioButton.addActionListener(actionListenerCardFilter);
-        whiteCardRadioButton.addActionListener(actionListenerCardFilter);
-        colorlessCardRadioButton.addActionListener(actionListenerCardFilter);
-        
-        /* Init Database access */
-        database = db;
+        blackCardCheckBox.addActionListener(actionListenerCardFilter);
+        blueCardCheckBox.addActionListener(actionListenerCardFilter);
+        greenCardCheckBox.addActionListener(actionListenerCardFilter);
+        redCardCheckBox.addActionListener(actionListenerCardFilter);
+        whiteCardCheckBox.addActionListener(actionListenerCardFilter);
+        colorlessCardCheckBox.addActionListener(actionListenerCardFilter);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox blackCardRadioButton;
-    private javax.swing.JCheckBox blueCardRadioButton;
-    private javax.swing.JCheckBox colorlessCardRadioButton;
-    private javax.swing.JCheckBox greenCardRadioButton;
+    private javax.swing.JCheckBox blackCardCheckBox;
+    private javax.swing.JCheckBox blueCardCheckBox;
+    private javax.swing.JCheckBox colorlessCardCheckBox;
+    private javax.swing.JCheckBox greenCardCheckBox;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JCheckBox redCardRadioButton;
-    private javax.swing.JCheckBox whiteCardRadioButton;
+    private javax.swing.JCheckBox redCardCheckBox;
+    private javax.swing.JCheckBox whiteCardCheckBox;
     // End of variables declaration//GEN-END:variables
 }

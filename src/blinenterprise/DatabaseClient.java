@@ -56,6 +56,10 @@ public class DatabaseClient {
         return cardCollection.getCardNames();
     }
     
+    public CardSearchFilter getCardFilterMenager(){
+        return cardCollection.getCardFilterMenager();
+    }
+    
     public String[] getCardNamesArrayContaining(String text){                   // Zwraca z kolekcji posortowana tablice kart zawierajacych wpisana fraze
         currentCardList = cardCollection.getCardsContaining(text);
         String[] list_tab = new String[currentCardList.size()];

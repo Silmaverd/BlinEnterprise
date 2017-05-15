@@ -8,6 +8,11 @@ import java.util.HashSet;
 public class CardCollection {                               // Kolekcja wczytanych kart
                                                             // Ta klasa zarzadza kolekcja, ale dostep do niej ma tylko klient bazy danych
     private Collection<Card> cards;
+    private CardSearchFilter cardFilterMenager;
+
+    public CardSearchFilter getCardFilterMenager() {
+        return cardFilterMenager;
+    }
     
     public CardCollection(Collection<Card> c){
         cards = c;
