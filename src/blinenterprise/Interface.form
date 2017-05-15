@@ -262,7 +262,6 @@
             <Property name="text" type="java.lang.String" value="Wyszukaj kart&#x119;"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CardNameInputLineActionPerformed"/>
             <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="CardNameInputLineKeyReleased"/>
           </Events>
         </Component>

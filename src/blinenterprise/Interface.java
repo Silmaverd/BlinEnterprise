@@ -118,11 +118,6 @@ public class Interface extends javax.swing.JFrame {
         CardImage.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         CardNameInputLine.setText("Wyszukaj kartę");
-        CardNameInputLine.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CardNameInputLineActionPerformed(evt);
-            }
-        });
         CardNameInputLine.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 CardNameInputLineKeyReleased(evt);
@@ -402,17 +397,6 @@ public class Interface extends javax.swing.JFrame {
         BackButton.setSelected(false);
     }//GEN-LAST:event_BackButtonActionPerformed
 
-    private void CardNameInputLineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CardNameInputLineActionPerformed
-        try {
-            card_description_field.setText(dbClient.getCardDescription(CardNameInputLine.getText()));
-            currentCard = dbClient.getCardWithName(CardNameInputLine.getText().toLowerCase());
-            showCurrentCard();
-        } catch (CardNotFoundException ex) {
-            CardNameInputLine.setText("Card not found");
-        }
-            
-    }//GEN-LAST:event_CardNameInputLineActionPerformed
-
     private void CardListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_CardListValueChanged
         if (!evt.getValueIsAdjusting()) {//This line prevents double events
             try {
@@ -425,7 +409,7 @@ public class Interface extends javax.swing.JFrame {
     }//GEN-LAST:event_CardListValueChanged
 
     private void CardNameInputLineKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CardNameInputLineKeyReleased
-        CardList.setListData(dbClient.getCardNamesArrayContaining(CardNameInputLine.getText()));
+        CardList.setListData(dbClient.getCardNamesArrayContaining(CardNameInputLine.getText().toLowerCase()));
     }//GEN-LAST:event_CardNameInputLineKeyReleased
 
     private void addCardButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCardButtonActionPerformed
