@@ -40,14 +40,14 @@ public class SampleHandFrame extends javax.swing.JFrame {
         currentDeck = deck;
         dbClient = dbc;
     }
-    
+       
     public void RandomCards(int amount) throws CardNotFoundException{           // Funkcja losuje wskazana ilosc kart i wyswietla w labelach
         clearLabels();
         ArrayList<Card> deck = currentDeck.getDeckAsArrayListWithRepeats();     // Reprezentacja decku w postaci tablicy z powtorkami ulatwia losowanie
         Image cardImage;                                                        // Kazda karta dostaje swoj numer w decku, losujemy ten numer
-        for (int i=0; i<amount; i++){
+        ArrayList repeats = new ArrayList(); 
+        for (int i=0; i<amount; i++){                                           // Przechowuje juz wylosowane karty
             Random r = new Random();
-            ArrayList repeats = new ArrayList();                                // Przechowuje juz wylosowane karty
             int index=r.nextInt(deck.size());
             while(repeats.contains(index)){                                     // Zapobieganie powtorkom
                 index = r.nextInt(deck.size());

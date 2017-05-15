@@ -125,48 +125,56 @@ public class TabbedPane extends JTabbedPane {                                   
         super();
         this.creatures = new JList();
         creatures.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            @Override
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                creatureSelected(evt);
             }
         });
         this.instants = new JList();
         instants.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            @Override
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                instantSelected(evt);
             }
         });
         this.sorceries = new JList();
         sorceries.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            @Override
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                sorcerySelected(evt);
             }
         });
         this.lands = new JList();
         lands.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            @Override
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                landSelected(evt);
             }
         });
         this.enchantments = new JList();
         enchantments.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            @Override
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                enchantmentSelected(evt);
             }
         });
         this.artifacts = new JList();
         artifacts.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            @Override
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                artifactSelected(evt);
             }
         });
         this.planeswalkers = new JList();
         planeswalkers.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            @Override
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                planeswalkerSelected(evt);
             }
         });
         this.other = new JList();
         other.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            @Override
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                otherSelected(evt);
             }

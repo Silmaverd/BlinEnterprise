@@ -324,7 +324,10 @@ public class DeckAnalyzer extends javax.swing.JPanel {
         }
         
         totalMC = R + G + B + U + W;
-        if (currentDeck.getSize() == 0) return;
+        if (currentDeck.getSize() == 0){
+            parent.removeAll();
+            return;
+        }
         DefaultPieDataset pieSet = new DefaultPieDataset();
         pieSet.setValue("Red", R);
         pieSet.setValue("Blue", U);
@@ -351,7 +354,10 @@ public class DeckAnalyzer extends javax.swing.JPanel {
     }
     
     public void PaintTypeChart(Deck currentDeck, JPanel parent, String title){
-        if (currentDeck.getSize() == 0) return;
+        if (currentDeck.getSize() == 0){
+            parent.removeAll();
+            return;
+        }
         DefaultPieDataset pieSet = new DefaultPieDataset();
         pieSet.setValue("Creature", currentDeck.getCreatures().size());
         pieSet.setValue("Instant", currentDeck.getInstants().size());
