@@ -13,7 +13,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 public class Interface extends javax.swing.JFrame {
 
@@ -27,6 +29,14 @@ public class Interface extends javax.swing.JFrame {
     public Interface() {
         initComponents();
         initialize();
+    }
+
+    public JList<String> getCardList() {
+        return CardList;
+    }
+
+    public JTextField getCardNameInputLine() {
+        return CardNameInputLine;
     }
     
     public void initialize(){
@@ -50,7 +60,7 @@ public class Interface extends javax.swing.JFrame {
     }
     
     public void initializeFilterCardsFrame() {
-        filterFrame = new FilterCardsFrame(dbClient);
+        filterFrame = new FilterCardsFrame(dbClient, this);
         filterFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         filterFrame.addWindowListener(new WindowListener() {
             @Override

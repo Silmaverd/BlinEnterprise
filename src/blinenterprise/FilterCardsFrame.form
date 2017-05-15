@@ -24,13 +24,20 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
+              <Component id="submitFiltersButton" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="336" max="32767" attributes="0"/>
+              <EmptySpace pref="302" max="32767" attributes="0"/>
+              <Component id="submitFiltersButton" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -42,28 +49,22 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
+                          <Component id="redCardCheckBox" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="whiteCardCheckBox" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
                           <Component id="blackCardCheckBox" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="blueCardCheckBox" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="greenCardCheckBox" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" attributes="0">
-                          <Component id="redCardCheckBox" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="colorlessCardCheckBox" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="matchColorsExactlyRadioButton" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-              </Group>
-              <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
-                      <Component id="whiteCardCheckBox" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="93" max="32767" attributes="0"/>
-                  </Group>
+                  <EmptySpace min="0" pref="8" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -79,16 +80,10 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="redCardCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="colorlessCardCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="whiteCardCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="32" max="32767" attributes="0"/>
-              </Group>
-              <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
-                      <Component id="whiteCardCheckBox" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="30" max="32767" attributes="0"/>
-                  </Group>
+                  <EmptySpace pref="9" max="32767" attributes="0"/>
+                  <Component id="matchColorsExactlyRadioButton" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -96,35 +91,40 @@
       <SubComponents>
         <Component class="javax.swing.JCheckBox" name="greenCardCheckBox">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Zielony"/>
+            <Property name="text" type="java.lang.String" value="Green"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JCheckBox" name="redCardCheckBox">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Czerwony"/>
+            <Property name="text" type="java.lang.String" value="Red"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JCheckBox" name="whiteCardCheckBox">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Bia&#x142;y"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JCheckBox" name="colorlessCardCheckBox">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Bezkoloru"/>
+            <Property name="text" type="java.lang.String" value="White"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JCheckBox" name="blackCardCheckBox">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Czarny"/>
+            <Property name="text" type="java.lang.String" value="Black"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JCheckBox" name="blueCardCheckBox">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Niebieski"/>
+            <Property name="text" type="java.lang.String" value="Blue"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="matchColorsExactlyRadioButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Match Colors Exactly"/>
           </Properties>
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JButton" name="submitFiltersButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="submit"/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>

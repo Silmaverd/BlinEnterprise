@@ -136,5 +136,7 @@ public class Card {                                         // Klasa card przech
                 "P/T: " + Integer.toString(power) + " / " + Integer.toString(toughness) + "\n" + 
                 "Text: "+cardtext + "\n");
     }
-    
+    public HashSet<String> getCardColors() {
+        return colors;
+    }
 }
