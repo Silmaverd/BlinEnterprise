@@ -605,6 +605,8 @@ public class Interface extends javax.swing.JFrame {
                     } catch (IOException ex) {}
                     break;
                 case 1:
+                    currentDeck.clear();
+                    currentDeck.getSideboard().clear();
                     break;
                 case 2:
                     return;
