@@ -116,6 +116,15 @@ public class FilterCardsFrame extends javax.swing.JFrame {
         matchColorsExactlyRadioButton.addActionListener(actionListenerCardFilter);
         submitFiltersButton.addActionListener(actionListenerCardFilter);
     }
+    
+    public void removeAllFilters() {
+        blackCardCheckBox.setSelected(false);
+        blueCardCheckBox.setSelected(false);
+        greenCardCheckBox.setSelected(false);
+        redCardCheckBox.setSelected(false);
+        whiteCardCheckBox.setSelected(false);
+        matchColorsExactlyRadioButton.setSelected(false);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox blackCardCheckBox;

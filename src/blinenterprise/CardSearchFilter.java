@@ -42,4 +42,8 @@ public class CardSearchFilter {
         }
     return cardList;
     }
+    
+    public void removeAllFilters() {
+        filters.clear();
+    }
 }

@@ -72,8 +72,11 @@ public class DatabaseClient {
         return list_tab;
     }
     
-    public String[] getFilteredCardNames(String text){                         // Zwraca z kolekcji posortowana tablice kart zawierajacych wpisana fraze
-        currentCardList = cardCollection.applySearchFilters(text);              // Która dodatkowo przeszła przez proces filtrowania
+    public String[] getFilteredCardNames(String text){ 
+        if (text.equals("wyszukaj kartę"))
+            return getCardNamesArray();
+        
+        currentCardList = cardCollection.applySearchFilters(text);              
         String[] list_tab = new String[currentCardList.size()];
         int i=0;
         for (Card card : currentCardList){
@@ -109,5 +112,9 @@ public class DatabaseClient {
             }
         }
         return image;
+    }
+    
+    public void removeAllFilters() {
+        cardCollection.removeAllFilters();
     }
 }

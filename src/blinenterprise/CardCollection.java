@@ -68,9 +68,10 @@ public class CardCollection {                               // Kolekcja wczytany
     }
     
     public HashSet<Card> applySearchFilters(String text) {
-        if (text.equals("Wyszukaj kartę"))
-            return cardFilterMenager.applyfilters(getCardsContaining(""));
-        
         return cardFilterMenager.applyfilters(getCardsContaining(text));
+    }
+    
+    public void removeAllFilters() {
+        cardFilterMenager.removeAllFilters();
     }
 }
