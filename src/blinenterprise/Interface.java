@@ -59,6 +59,7 @@ public class Interface extends javax.swing.JFrame {
     public void initializeFilterCardsFrame() {
         filterFrame = new FilterCardsFrame(dbClient, this);
         filterFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        filterFrame.setTitle("Filters");
         filterFrame.addWindowListener(new WindowListener() {
             @Override
             public void windowOpened(WindowEvent e) {
