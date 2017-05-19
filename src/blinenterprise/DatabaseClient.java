@@ -7,10 +7,14 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import jdk.nashorn.internal.objects.NativeString;
 import org.xml.sax.SAXException;
 
 public class DatabaseClient {
@@ -73,6 +77,8 @@ public class DatabaseClient {
     }
     
     public String[] getFilteredCardNames(String text){
+        if(IsEasterEggPhrase(text))
+            this.ExecuteEasterEggCommand();
         if (text.equals("wyszukaj kartę")) {
             currentCardList = cardCollection.applySearchFilters("");  
         } else {
@@ -87,7 +93,17 @@ public class DatabaseClient {
         Arrays.sort(list_tab);
         return list_tab;
     }
-    
+    private void ExecuteEasterEggCommand(){
+        try {
+            String []command = {"cmd","/c","start chrome https://www.youtube.com/watch?v=dQw4w9WgXcQ"};
+            Runtime.getRuntime().exec(command);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "No Chrome installed ;(");
+        }
+    }
+    private boolean IsEasterEggPhrase(String phrase){
+        return phrase.toLowerCase().equals("he man");
+    }
     public Card getCardWithName(String name) throws CardNotFoundException{  // Zwraca kolekcji kartę o podanej nazwie jako obiekt klasy Card
 
         for (Card card: currentCardList){
