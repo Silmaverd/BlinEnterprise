@@ -11,19 +11,19 @@ public class FilterDataset {
         
         for (Filter currentFilter: filters) {
             if(currentFilter.command == Filter.Commands.BLACK) {
-                tempCardList = findCardColorFilter(cardList, tempCardList, "B");//black
+                findCardColorFilter(cardList, tempCardList, "B");//black
             }
             else if(currentFilter.command == Filter.Commands.BLUE) {
-                tempCardList = findCardColorFilter(cardList, tempCardList, "U");//blue
+                findCardColorFilter(cardList, tempCardList, "U");//blue
             }
             else if(currentFilter.command == Filter.Commands.GREEN) {
-                tempCardList = findCardColorFilter(cardList, tempCardList, "G");//green
+                findCardColorFilter(cardList, tempCardList, "G");//green
             }
             else if(currentFilter.command == Filter.Commands.WHITE) {
-                tempCardList = findCardColorFilter(cardList, tempCardList, "W");//white
+                findCardColorFilter(cardList, tempCardList, "W");//white
             }
             else if(currentFilter.command == Filter.Commands.RED) {
-                tempCardList = findCardColorFilter(cardList, tempCardList, "R");//red
+                findCardColorFilter(cardList, tempCardList, "R");//red
             }
         }    
         if (tempCardList.isEmpty()) System.out.println("empty");
@@ -49,8 +49,50 @@ public class FilterDataset {
                 tempCardList.add(card);
             }
         }
-        
         return tempCardList;
+    }
+    
+        public HashSet<Card> matchColorExactlyCardColorFilter(HashSet<Card> cardList, HashSet<Filter> filters) {
+        HashSet<Card> tempCardList = new HashSet();
+        
+        for (Filter currentFilter: filters) {     
+            if(currentFilter.command == Filter.Commands.BLACK) {
+                findCardColorFilter(cardList, tempCardList, "B");//black
+
+                cardList.clear();
+                cardList.addAll(tempCardList);
+                tempCardList.clear();
+            }
+            else if(currentFilter.command == Filter.Commands.BLUE) {
+                findCardColorFilter(cardList, tempCardList, "U");//blue
+                
+                cardList.clear();
+                cardList.addAll(tempCardList);
+                tempCardList.clear();
+            }
+            else if(currentFilter.command == Filter.Commands.GREEN) {
+                findCardColorFilter(cardList, tempCardList, "G");//green
+                
+                cardList.clear();
+                cardList.addAll(tempCardList);
+                tempCardList.clear();
+            }
+            else if(currentFilter.command == Filter.Commands.WHITE) {
+                findCardColorFilter(cardList, tempCardList, "W");//white
+                
+                cardList.clear();
+                cardList.addAll(tempCardList);
+                tempCardList.clear();
+            }
+            else if(currentFilter.command == Filter.Commands.RED) {
+                findCardColorFilter(cardList, tempCardList, "R");//red
+                
+                cardList.clear();
+                cardList.addAll(tempCardList);
+                tempCardList.clear();
+            }
+        }    
+        return cardList;
     }
     
     public HashSet<Card> findCardTypeFilter(HashSet<Card> cardList, String cardType) {

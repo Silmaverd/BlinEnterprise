@@ -35,7 +35,8 @@ public class CardSearchFilter {
         if(!filters.isEmpty()){
             for (Filter currentFilter: filters) {
                 if(currentFilter.command == Filter.Commands.MATCHCOLORSEXACTLY) {
-                    System.out.println("TO IMPLEMENT");                             //todo
+                    cardList = filterData.matchColorExactlyCardColorFilter(cardList, filters);
+                    defaultColorFilter = false;
                 }
                 if(currentFilter.command == Filter.Commands.SELECTTYPE) {
                     cardList = filterData.findCardTypeFilter(cardList, currentFilter.getValue());
