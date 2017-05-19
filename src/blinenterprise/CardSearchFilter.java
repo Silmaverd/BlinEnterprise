@@ -13,9 +13,11 @@ public class CardSearchFilter {
         filterData = new FilterDataset();
     }
     
-    public void addFilter(Filter newFilter) {
-            filters.add(newFilter);  
-            System.out.println(newFilter.getCommand().toString());
+    public void addFilter(Filter newFilter) {           
+            if (newFilter.compareCommand(Filter.Commands.SELECTTYPE)) {
+                removeFilter(newFilter);    // there could be only one SELECTTYPE filter
+            }
+            filters.add(newFilter); 
     }
     
     public void removeFilter(Filter removeFilter) {
@@ -29,14 +31,17 @@ public class CardSearchFilter {
     }
     
     public HashSet<Card> applyfilters(HashSet<Card> cardList) {
-        boolean noFilterApplied = true;
+        boolean defaultColorFilter = true;
         if(!filters.isEmpty()){
             for (Filter currentFilter: filters) {
                 if(currentFilter.command == Filter.Commands.MATCHCOLORSEXACTLY) {
                     System.out.println("TO IMPLEMENT");                             //todo
                 }
+                if(currentFilter.command == Filter.Commands.SELECTTYPE) {
+                    cardList = filterData.findCardTypeFilter(cardList, currentFilter.getValue());
+                }
             }
-            if(noFilterApplied){
+            if(defaultColorFilter){
                 cardList = filterData.defaultCardColorFilter(cardList, filters);
             }
         }

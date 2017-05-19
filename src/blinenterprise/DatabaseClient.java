@@ -72,11 +72,12 @@ public class DatabaseClient {
         return list_tab;
     }
     
-    public String[] getFilteredCardNames(String text){ 
-        if (text.equals("wyszukaj kartę"))
-            return getCardNamesArray();
-        
-        currentCardList = cardCollection.applySearchFilters(text);              
+    public String[] getFilteredCardNames(String text){
+        if (text.equals("wyszukaj kartę")) {
+            currentCardList = cardCollection.applySearchFilters("");  
+        } else {
+            currentCardList = cardCollection.applySearchFilters(text); 
+        }
         String[] list_tab = new String[currentCardList.size()];
         int i=0;
         for (Card card : currentCardList){

@@ -10,13 +10,17 @@ public class Filter {
     }
 
     public enum Commands {
-        BLACK, RED, BLUE, GREEN, WHITE, COLORLESS, MATCHCOLORSEXACTLY;
+        BLACK, RED, BLUE, GREEN, WHITE, COLORLESS, MATCHCOLORSEXACTLY, SELECTTYPE;
     }
     
     public boolean compareCommand(Filter filter) {
         return filter.command == this.command;
     }
 
+    public boolean compareCommand(Commands command) {
+        return command == this.command;
+    }
+    
     public String getValue() {
         return value;
     }

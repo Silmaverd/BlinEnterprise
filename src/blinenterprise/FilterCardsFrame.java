@@ -5,8 +5,9 @@ import javax.swing.JCheckBox;
 
 
 public class FilterCardsFrame extends javax.swing.JFrame {
-    
+    String[] cardTypes = { "Artifact", "Creature", "Enchantment", "Instant", "Land", "Planeswalker"};
     private DatabaseClient database;    
+    
     
     public FilterCardsFrame(DatabaseClient db, Interface mainInterface) {
         initComponents();
@@ -25,6 +26,8 @@ public class FilterCardsFrame extends javax.swing.JFrame {
         blueCardCheckBox = new javax.swing.JCheckBox();
         matchColorsExactlyRadioButton = new javax.swing.JRadioButton();
         submitFiltersButton = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        cardTypeComboBox = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -77,6 +80,21 @@ public class FilterCardsFrame extends javax.swing.JFrame {
 
         submitFiltersButton.setText("submit");
 
+        cardTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Card Type", "Artifact", "Creature", "Enchantment", "Instant", "Land", "Planeswalker" }));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(cardTypeComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(cardTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 88, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -86,12 +104,15 @@ public class FilterCardsFrame extends javax.swing.JFrame {
                 .addGap(60, 60, 60)
                 .addComponent(submitFiltersButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 302, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 188, Short.MAX_VALUE)
                 .addComponent(submitFiltersButton)
                 .addContainerGap())
         );
@@ -106,7 +127,7 @@ public class FilterCardsFrame extends javax.swing.JFrame {
         /* Init card properties selection Listener */
         ActionListener actionListenerCardFilter = new FilterCardPropertiesActionHandler(blackCardCheckBox, 
                 blueCardCheckBox, greenCardCheckBox, redCardCheckBox, 
-                whiteCardCheckBox, matchColorsExactlyRadioButton, submitFiltersButton, database, mainInterface, this);
+                whiteCardCheckBox, matchColorsExactlyRadioButton, submitFiltersButton, cardTypeComboBox, database, mainInterface, this);
         
         blackCardCheckBox.addActionListener(actionListenerCardFilter);
         blueCardCheckBox.addActionListener(actionListenerCardFilter);
@@ -115,6 +136,7 @@ public class FilterCardsFrame extends javax.swing.JFrame {
         whiteCardCheckBox.addActionListener(actionListenerCardFilter);
         matchColorsExactlyRadioButton.addActionListener(actionListenerCardFilter);
         submitFiltersButton.addActionListener(actionListenerCardFilter);
+        cardTypeComboBox.addActionListener(actionListenerCardFilter);
     }
     
     public void removeAllFilters() {
@@ -129,8 +151,10 @@ public class FilterCardsFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox blackCardCheckBox;
     private javax.swing.JCheckBox blueCardCheckBox;
+    private javax.swing.JComboBox<String> cardTypeComboBox;
     private javax.swing.JCheckBox greenCardCheckBox;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JRadioButton matchColorsExactlyRadioButton;
     private javax.swing.JCheckBox redCardCheckBox;
     private javax.swing.JButton submitFiltersButton;

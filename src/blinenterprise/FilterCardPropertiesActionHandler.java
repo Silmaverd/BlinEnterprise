@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
 
 public class FilterCardPropertiesActionHandler implements ActionListener {
@@ -16,6 +17,7 @@ public class FilterCardPropertiesActionHandler implements ActionListener {
     JCheckBox whiteCardCheckBox; 
     JRadioButton matchColorsExactlyRadioButton;
     JButton submitFiltersButton;
+    JComboBox<String> cardTypeComboBox;
     private DatabaseClient database;
     private CardSearchFilter cardFilterMenager;
     private Interface mainInterfaceInstance; 
@@ -23,7 +25,7 @@ public class FilterCardPropertiesActionHandler implements ActionListener {
     
     public FilterCardPropertiesActionHandler(JCheckBox black, JCheckBox blue, 
             JCheckBox green, JCheckBox red, JCheckBox white,
-            JRadioButton matchColorsExactly, JButton submit, DatabaseClient db, 
+            JRadioButton matchColorsExactly, JButton submit, JComboBox<String> cardtype, DatabaseClient db, 
             Interface mainInterface, FilterCardsFrame frame) {
         
         blackCardCheckBox = black;
@@ -37,6 +39,7 @@ public class FilterCardPropertiesActionHandler implements ActionListener {
         cardFilterMenager = db.getCardFilterMenager();
         mainInterfaceInstance = mainInterface;
         filterFrame = frame;
+        cardTypeComboBox = cardtype;
     }
     
     @Override
@@ -48,15 +51,15 @@ public class FilterCardPropertiesActionHandler implements ActionListener {
             JCheckBox checkbox = (JCheckBox) e.getSource();
             
             if (e.getSource() == blackCardCheckBox) {
-                newFilter.command = Filter.Commands.BLACK;  
+                newFilter.setCommand(Filter.Commands.BLACK);  
             } else if (e.getSource() == blueCardCheckBox) {
-                newFilter.command = Filter.Commands.BLUE;
+                newFilter.setCommand(Filter.Commands.BLUE);
             } else if (e.getSource() == greenCardCheckBox) {
-                newFilter.command = Filter.Commands.GREEN;
+                newFilter.setCommand(Filter.Commands.GREEN);
             } else if (e.getSource() == redCardCheckBox) {
-                newFilter.command = Filter.Commands.RED;
+                newFilter.setCommand(Filter.Commands.RED);
             } else if (e.getSource() == whiteCardCheckBox) {
-                newFilter.command = Filter.Commands.WHITE;
+                newFilter.setCommand(Filter.Commands.WHITE);
             }
             
             if(checkbox.isSelected()) {
@@ -66,10 +69,10 @@ public class FilterCardPropertiesActionHandler implements ActionListener {
             }
         }
         
-        /* ################# Multicolor radio button ################# */
+        /* ################# MATCHCOLORSEXACTLY radio button ################# */
         if (e.getSource() == matchColorsExactlyRadioButton) {
             JRadioButton radiobutton = (JRadioButton) e.getSource();
-            newFilter.command = Filter.Commands.MATCHCOLORSEXACTLY;
+            newFilter.setCommand(Filter.Commands.MATCHCOLORSEXACTLY);
             if(radiobutton.isSelected()) {
                 cardFilterMenager.addFilter(newFilter);
             } else if(!radiobutton.isSelected()) {
@@ -77,9 +80,17 @@ public class FilterCardPropertiesActionHandler implements ActionListener {
             }
         }
         
+        /* ################# Select card type combobox ################# */
+        if (e.getSource() == cardTypeComboBox) {
+            JComboBox combobox = (JComboBox)e.getSource();
+            newFilter.setCommand(Filter.Commands.SELECTTYPE);
+            newFilter.setValue((String) combobox.getSelectedItem());
+            cardFilterMenager.addFilter(newFilter);
+        }
+        
         /* ################# Submit button ################# */
         if (e.getSource() == submitFiltersButton) {
-            mainInterfaceInstance.getCardList().setListData(database.getFilteredCardNames(mainInterfaceInstance.getCardNameInputLine().getText()));
+            mainInterfaceInstance.getCardList().setListData(database.getFilteredCardNames(mainInterfaceInstance.getCardNameInputLine().getText().toLowerCase()));
             filterFrame.dispatchEvent(new WindowEvent(filterFrame, WindowEvent.WINDOW_CLOSING));
         }
     }  

@@ -26,7 +26,8 @@ public class FilterDataset {
                 tempCardList = findCardColorFilter(cardList, tempCardList, "R");//red
             }
         }    
-        return tempCardList;
+        if (tempCardList.isEmpty()) System.out.println("empty");
+        return (tempCardList.isEmpty()) ? cardList : tempCardList;
     }
     
     public HashSet<Card> findCardColorFilter(HashSet<Card> cardList, 
@@ -49,6 +50,19 @@ public class FilterDataset {
             }
         }
         
+        return tempCardList;
+    }
+    
+    public HashSet<Card> findCardTypeFilter(HashSet<Card> cardList, String cardType) {
+        HashSet<Card> tempCardList = new HashSet();
+
+        for (Card card : cardList){         
+            
+            if(card.getCardtype().toUpperCase().contains(cardType.toUpperCase())) {
+                tempCardList.add(card);
+                
+            }
+        }  
         return tempCardList;
     }
 }
