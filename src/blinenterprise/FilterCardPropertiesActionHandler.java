@@ -16,6 +16,7 @@ public class FilterCardPropertiesActionHandler implements ActionListener {
     JCheckBox redCardCheckBox;
     JCheckBox whiteCardCheckBox; 
     JRadioButton matchColorsExactlyRadioButton;
+    JRadioButton excludeUnselectedColorsRadioButton;
     JButton submitFiltersButton;
     JComboBox<String> cardTypeComboBox;
     private DatabaseClient database;
@@ -25,7 +26,7 @@ public class FilterCardPropertiesActionHandler implements ActionListener {
     
     public FilterCardPropertiesActionHandler(JCheckBox black, JCheckBox blue, 
             JCheckBox green, JCheckBox red, JCheckBox white,
-            JRadioButton matchColorsExactly, JButton submit, JComboBox<String> cardtype, DatabaseClient db, 
+            JRadioButton matchColorsExactly, JRadioButton excludeUnselectedColors, JButton submit, JComboBox<String> cardtype, DatabaseClient db, 
             Interface mainInterface, FilterCardsFrame frame) {
         
         blackCardCheckBox = black;
@@ -33,7 +34,8 @@ public class FilterCardPropertiesActionHandler implements ActionListener {
         greenCardCheckBox = green;
         redCardCheckBox = red;
         whiteCardCheckBox = white;
-        matchColorsExactlyRadioButton = matchColorsExactly;   
+        matchColorsExactlyRadioButton = matchColorsExactly;  
+        excludeUnselectedColorsRadioButton = excludeUnselectedColors;
         submitFiltersButton = submit;
         database = db;
         cardFilterMenager = db.getCardFilterMenager();
@@ -70,13 +72,23 @@ public class FilterCardPropertiesActionHandler implements ActionListener {
         }
         
         /* ################# MATCHCOLORSEXACTLY radio button ################# */
-        if (e.getSource() == matchColorsExactlyRadioButton) {
-            JRadioButton radiobutton = (JRadioButton) e.getSource();
-            newFilter.setCommand(Filter.Commands.MATCHCOLORSEXACTLY);
-            if(radiobutton.isSelected()) {
-                cardFilterMenager.addFilter(newFilter);
-            } else if(!radiobutton.isSelected()) {
-                cardFilterMenager.removeFilter(newFilter);
+        if(e.getSource().getClass() == JRadioButton.class) {        
+            JRadioButton radiobutton = (JRadioButton) e.getSource();   
+            
+            if (e.getSource() == matchColorsExactlyRadioButton) {
+                newFilter.setCommand(Filter.Commands.MATCHCOLORSEXACTLY);
+                if(radiobutton.isSelected()) {
+                    cardFilterMenager.addFilter(newFilter);
+                } else if(!radiobutton.isSelected()) {
+                    cardFilterMenager.removeFilter(newFilter);
+                }
+            } else if (e.getSource() == excludeUnselectedColorsRadioButton) {
+                newFilter.setCommand(Filter.Commands.EXCLUDEUNSELECTEDCOLORS);
+                if(radiobutton.isSelected()) {
+                    cardFilterMenager.addFilter(newFilter);
+                } else if(!radiobutton.isSelected()) {
+                    cardFilterMenager.removeFilter(newFilter);
+                }
             }
         }
         

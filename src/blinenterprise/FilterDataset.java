@@ -5,31 +5,101 @@ import java.util.HashSet;
 
 public class FilterDataset {
    
+    public String changeColorCommandToColorSign(Filter.Commands command) {
+        switch (command) {
+            case BLACK:
+                return "B";
+            case BLUE:
+                return "U";
+            case GREEN:
+                return "G";
+            case WHITE:
+                return "W";
+            default:
+                return "R";
+        }
+    }
+    
     public HashSet<Card> defaultCardColorFilter(HashSet<Card> cardList, HashSet<Filter> filters) {
         
         HashSet<Card> tempCardList = new HashSet();
         
         for (Filter currentFilter: filters) {
-            if(currentFilter.command == Filter.Commands.BLACK) {
-                findCardColorFilter(cardList, tempCardList, "B");//black
-            }
-            else if(currentFilter.command == Filter.Commands.BLUE) {
-                findCardColorFilter(cardList, tempCardList, "U");//blue
-            }
-            else if(currentFilter.command == Filter.Commands.GREEN) {
-                findCardColorFilter(cardList, tempCardList, "G");//green
-            }
-            else if(currentFilter.command == Filter.Commands.WHITE) {
-                findCardColorFilter(cardList, tempCardList, "W");//white
-            }
-            else if(currentFilter.command == Filter.Commands.RED) {
-                findCardColorFilter(cardList, tempCardList, "R");//red
+            if(null != currentFilter.command) switch (currentFilter.command) {
+                case BLACK:
+                    findCardColorFilter(cardList, tempCardList,
+                            changeColorCommandToColorSign(Filter.Commands.BLACK));
+                    break;
+                case BLUE:
+                    findCardColorFilter(cardList, tempCardList,
+                            changeColorCommandToColorSign(Filter.Commands.BLUE));
+                    break;
+                case GREEN:
+                    findCardColorFilter(cardList, tempCardList,
+                            changeColorCommandToColorSign(Filter.Commands.GREEN));
+                    break;
+                case WHITE:
+                    findCardColorFilter(cardList, tempCardList,
+                            changeColorCommandToColorSign(Filter.Commands.WHITE));
+                    break;
+                case RED:
+                    findCardColorFilter(cardList, tempCardList,
+                            changeColorCommandToColorSign(Filter.Commands.RED));
+                    break;
+                default:
+                    break;
             }
         }    
-        if (tempCardList.isEmpty()) System.out.println("empty");
         return (tempCardList.isEmpty()) ? cardList : tempCardList;
     }
     
+   public HashSet<Card> matchColorExactlyCardColorFilter(HashSet<Card> cardList, HashSet<Filter> filters) {
+        HashSet<Card> tempCardList = new HashSet();
+
+        for (Filter currentFilter: filters) {     
+            if(null != currentFilter.command) switch (currentFilter.command) {
+                case BLACK:
+                    findCardColorFilter(cardList, tempCardList,
+                            changeColorCommandToColorSign(Filter.Commands.BLACK));
+                    cardList.clear();
+                    cardList.addAll(tempCardList);
+                    tempCardList.clear();
+                    break;
+                case BLUE:
+                    findCardColorFilter(cardList, tempCardList,
+                            changeColorCommandToColorSign(Filter.Commands.BLUE));
+                    cardList.clear();
+                    cardList.addAll(tempCardList);
+                    tempCardList.clear();
+                    break;
+                case GREEN:
+                    findCardColorFilter(cardList, tempCardList,
+                            changeColorCommandToColorSign(Filter.Commands.GREEN));
+                    cardList.clear();
+                    cardList.addAll(tempCardList);
+                    tempCardList.clear();
+                    break;
+                case WHITE:
+                    findCardColorFilter(cardList, tempCardList,
+                            changeColorCommandToColorSign(Filter.Commands.WHITE));
+                    cardList.clear();
+                    cardList.addAll(tempCardList);
+                    tempCardList.clear();
+                    break;
+                case RED:
+                    findCardColorFilter(cardList, tempCardList,
+                            changeColorCommandToColorSign(Filter.Commands.RED));
+                    cardList.clear();
+                    cardList.addAll(tempCardList);
+                    tempCardList.clear();
+                    break;
+                default:
+                    break;
+            }
+        }    
+        return cardList;
+    }
+   
     public HashSet<Card> findCardColorFilter(HashSet<Card> cardList, 
         HashSet<Card> tempCardList, String colorName) {
         
@@ -52,49 +122,6 @@ public class FilterDataset {
         return tempCardList;
     }
     
-        public HashSet<Card> matchColorExactlyCardColorFilter(HashSet<Card> cardList, HashSet<Filter> filters) {
-        HashSet<Card> tempCardList = new HashSet();
-        
-        for (Filter currentFilter: filters) {     
-            if(currentFilter.command == Filter.Commands.BLACK) {
-                findCardColorFilter(cardList, tempCardList, "B");//black
-
-                cardList.clear();
-                cardList.addAll(tempCardList);
-                tempCardList.clear();
-            }
-            else if(currentFilter.command == Filter.Commands.BLUE) {
-                findCardColorFilter(cardList, tempCardList, "U");//blue
-                
-                cardList.clear();
-                cardList.addAll(tempCardList);
-                tempCardList.clear();
-            }
-            else if(currentFilter.command == Filter.Commands.GREEN) {
-                findCardColorFilter(cardList, tempCardList, "G");//green
-                
-                cardList.clear();
-                cardList.addAll(tempCardList);
-                tempCardList.clear();
-            }
-            else if(currentFilter.command == Filter.Commands.WHITE) {
-                findCardColorFilter(cardList, tempCardList, "W");//white
-                
-                cardList.clear();
-                cardList.addAll(tempCardList);
-                tempCardList.clear();
-            }
-            else if(currentFilter.command == Filter.Commands.RED) {
-                findCardColorFilter(cardList, tempCardList, "R");//red
-                
-                cardList.clear();
-                cardList.addAll(tempCardList);
-                tempCardList.clear();
-            }
-        }    
-        return cardList;
-    }
-    
     public HashSet<Card> findCardTypeFilter(HashSet<Card> cardList, String cardType) {
         HashSet<Card> tempCardList = new HashSet();
 
@@ -105,6 +132,40 @@ public class FilterDataset {
                 
             }
         }  
+        return tempCardList;
+    }
+
+    public HashSet<Card> excludeUnselectedColorsFilter(HashSet<Card> cardList, HashSet<Filter> filters) {
+        HashSet<String> cardColors;
+        HashSet<Filter.Commands> colorsToCheck = new HashSet();
+        HashSet<Card> tempCardList = new HashSet();
+        int colorsChacked = 0;
+        
+        for (Filter filter : filters) {
+            if (filter.getCommand().equals(Filter.Commands.BLACK)||
+                    filter.getCommand().equals(Filter.Commands.WHITE)||
+                    filter.getCommand().equals(Filter.Commands.RED)||
+                    filter.getCommand().equals(Filter.Commands.BLUE)||
+                    filter.getCommand().equals(Filter.Commands.GREEN)){       
+                colorsToCheck.add(filter.getCommand());
+            }
+        }       
+        
+        for (Card card : cardList){         
+            cardColors = card.getCardColors();
+            
+            for(String color : cardColors) {
+                for(Filter.Commands command : colorsToCheck) {
+                    if(color.equals(changeColorCommandToColorSign(command))) 
+                        colorsChacked--;
+                    else colorsChacked++;
+                }     
+            }
+            if(colorsChacked == 0) {
+                tempCardList.add(card);
+            }
+            colorsChacked = 0;
+        }
         return tempCardList;
     }
 }

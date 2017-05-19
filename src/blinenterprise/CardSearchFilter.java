@@ -32,6 +32,7 @@ public class CardSearchFilter {
     
     public HashSet<Card> applyfilters(HashSet<Card> cardList) {
         boolean defaultColorFilter = true;
+        boolean excludeUnselectedColorsFilter = false;
         if(!filters.isEmpty()){
             for (Filter currentFilter: filters) {
                 if(currentFilter.command == Filter.Commands.MATCHCOLORSEXACTLY) {
@@ -41,10 +42,14 @@ public class CardSearchFilter {
                 if(currentFilter.command == Filter.Commands.SELECTTYPE) {
                     cardList = filterData.findCardTypeFilter(cardList, currentFilter.getValue());
                 }
+                if(currentFilter.command == Filter.Commands.EXCLUDEUNSELECTEDCOLORS) {
+                    excludeUnselectedColorsFilter = true;
+                }
             }
-            if(defaultColorFilter){
-                cardList = filterData.defaultCardColorFilter(cardList, filters);
-            }
+            if(defaultColorFilter)
+                cardList = filterData.defaultCardColorFilter(cardList, filters);          
+            if(excludeUnselectedColorsFilter)
+                cardList = filterData.excludeUnselectedColorsFilter(cardList, filters);
         }
     return cardList;
     }

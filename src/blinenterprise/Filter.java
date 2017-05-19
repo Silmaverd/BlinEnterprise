@@ -10,7 +10,8 @@ public class Filter {
     }
 
     public enum Commands {
-        BLACK, RED, BLUE, GREEN, WHITE, COLORLESS, MATCHCOLORSEXACTLY, SELECTTYPE;
+        BLACK, RED, BLUE, GREEN, WHITE, COLORLESS, MATCHCOLORSEXACTLY,
+        SELECTTYPE, EXCLUDEUNSELECTEDCOLORS;
     }
     
     public boolean compareCommand(Filter filter) {
