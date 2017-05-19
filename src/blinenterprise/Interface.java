@@ -686,8 +686,8 @@ public class Interface extends javax.swing.JFrame {
     }//GEN-LAST:event_openFilterframeActionPerformed
 
     private void resetAllFiltersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetAllFiltersActionPerformed
-        dbClient.removeAllFilters();
         filterFrame.removeAllFilters();
+        dbClient.removeAllFilters();
         CardList.setListData(dbClient.getFilteredCardNames(CardNameInputLine.getText().toLowerCase()));
     }//GEN-LAST:event_resetAllFiltersActionPerformed
 

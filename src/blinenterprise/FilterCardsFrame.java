@@ -203,6 +203,10 @@ public class FilterCardsFrame extends javax.swing.JFrame {
         redCardCheckBox.setSelected(false);
         whiteCardCheckBox.setSelected(false);
         matchColorsExactlyRadioButton.setSelected(false);
+        ExcludeUnselectedColorsRadioButton.setSelected(false);
+        cardTypeComboBox.setSelectedIndex(0);
+        convManaCostComboBox.setSelectedIndex(0);
+        convManaCostLabelSlider.setValue(0);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

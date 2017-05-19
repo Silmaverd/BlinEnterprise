@@ -138,8 +138,7 @@ public class FilterDataset {
         HashSet<String> cardColors;
         HashSet<Filter.Commands> colorsToCheck = new HashSet();
         HashSet<Card> tempCardList = new HashSet();
-        int colorsChacked = 0;
-        
+        boolean foundColor = false;
         for (Filter filter : filters) {
             if (filter.getCommand().equals(Filter.Commands.BLACK)||
                     filter.getCommand().equals(Filter.Commands.WHITE)||
@@ -154,16 +153,13 @@ public class FilterDataset {
             cardColors = card.getCardColors();
             
             for(String color : cardColors) {
+                foundColor = false;
                 for(Filter.Commands command : colorsToCheck) {
                     if(color.equals(changeColorCommandToColorSign(command))) 
-                        colorsChacked--;
-                    else colorsChacked++;
-                }     
+                        foundColor = true;
+                } 
             }
-            if(colorsChacked == 0) {
-                tempCardList.add(card);
-            }
-            colorsChacked = 0;
+            if(foundColor) tempCardList.add(card);
         }
         return tempCardList;
     }
