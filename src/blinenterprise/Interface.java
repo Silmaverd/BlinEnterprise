@@ -170,6 +170,11 @@ public class Interface extends javax.swing.JFrame {
         CardImage.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         CardNameInputLine.setText("Wyszukaj kartę");
+        CardNameInputLine.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                CardNameInputLineFocusGained(evt);
+            }
+        });
         CardNameInputLine.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 CardNameInputLineKeyReleased(evt);
@@ -685,6 +690,12 @@ public class Interface extends javax.swing.JFrame {
         filterFrame.removeAllFilters();
         CardList.setListData(dbClient.getFilteredCardNames(CardNameInputLine.getText().toLowerCase()));
     }//GEN-LAST:event_resetAllFiltersActionPerformed
+
+    private void CardNameInputLineFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_CardNameInputLineFocusGained
+        if (CardNameInputLine.getText().equals("Wyszukaj kartę")) {
+            CardNameInputLine.setText("");
+        }
+    }//GEN-LAST:event_CardNameInputLineFocusGained
 
     public void setCurrentCard(Card card){
         currentCard = card;
