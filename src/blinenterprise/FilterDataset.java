@@ -129,7 +129,6 @@ public class FilterDataset {
             
             if(card.getCardtype().toUpperCase().contains(cardType.toUpperCase())) {
                 tempCardList.add(card);
-                
             }
         }  
         return tempCardList;
@@ -166,6 +165,43 @@ public class FilterDataset {
             }
             colorsChacked = 0;
         }
+        return tempCardList;
+    }
+    
+    public HashSet<Card> convertedManaCostFilter(HashSet<Card> cardList, Filter filterInfo) {
+        HashSet<Card> tempCardList = new HashSet();
+
+        for (Card card : cardList){         
+            
+            switch (filterInfo.getSubcommand()) {
+                case "Greater Than":
+                    if(card.getCmc() > Integer.parseInt(filterInfo.getValue())) {
+                        tempCardList.add(card);
+                    }   break;
+                case "Greater Equal To":
+                    if(card.getCmc() >= Integer.parseInt(filterInfo.getValue())) {
+                        tempCardList.add(card);
+                    }   break;
+                case "Less Than":
+                    if(card.getCmc() < Integer.parseInt(filterInfo.getValue())) {
+                        tempCardList.add(card);
+                    }   break;
+                case "Less Equal To":
+                    if(card.getCmc() <= Integer.parseInt(filterInfo.getValue())) {
+                        tempCardList.add(card);
+                    }   break;
+                case "Equal To":
+                    if(card.getCmc() == Integer.parseInt(filterInfo.getValue())) {
+                        tempCardList.add(card);
+                    }   break;
+                case "Not Equal To":
+                    if(card.getCmc() != Integer.parseInt(filterInfo.getValue())) {
+                        tempCardList.add(card);
+                    }   break;
+                default:
+                    break;
+            }
+        }  
         return tempCardList;
     }
 }

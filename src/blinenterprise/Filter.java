@@ -5,13 +5,19 @@ public class Filter {
     
     public Commands command;
     private String value;
+    private String subCommand;
 
     public Filter() {
+    }
+    public Filter(Commands command, String value, String subCommand) {
+        this.command = command;
+        this.value = value;
+        this.subCommand = subCommand;
     }
 
     public enum Commands {
         BLACK, RED, BLUE, GREEN, WHITE, COLORLESS, MATCHCOLORSEXACTLY,
-        SELECTTYPE, EXCLUDEUNSELECTEDCOLORS;
+        SELECTTYPE, EXCLUDEUNSELECTEDCOLORS, CONVERTEDMANACOST;
     }
     
     public boolean compareCommand(Filter filter) {
@@ -26,6 +32,10 @@ public class Filter {
         return value;
     }
 
+    public String getSubcommand() {
+        return subCommand;
+    }
+
     public Commands getCommand() {
         return command;
     }
@@ -36,5 +46,9 @@ public class Filter {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public void setSubCommand(String subCommand) {
+        this.subCommand = subCommand;
     }
 }

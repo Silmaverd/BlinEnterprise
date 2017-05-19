@@ -17,6 +17,9 @@ public class CardSearchFilter {
             if (newFilter.compareCommand(Filter.Commands.SELECTTYPE)) {
                 removeFilter(newFilter);    // there could be only one SELECTTYPE filter
             }
+            if (newFilter.compareCommand(Filter.Commands.CONVERTEDMANACOST)) {
+                removeFilter(newFilter);    // there could be only one CONVERTEDMANACOST filter
+            }
             filters.add(newFilter); 
     }
     
@@ -33,6 +36,8 @@ public class CardSearchFilter {
     public HashSet<Card> applyfilters(HashSet<Card> cardList) {
         boolean defaultColorFilter = true;
         boolean excludeUnselectedColorsFilter = false;
+        boolean convertedManaCost = false;
+        
         if(!filters.isEmpty()){
             for (Filter currentFilter: filters) {
                 if(currentFilter.command == Filter.Commands.MATCHCOLORSEXACTLY) {
@@ -44,6 +49,9 @@ public class CardSearchFilter {
                 }
                 if(currentFilter.command == Filter.Commands.EXCLUDEUNSELECTEDCOLORS) {
                     excludeUnselectedColorsFilter = true;
+                }
+                if(currentFilter.command == Filter.Commands.CONVERTEDMANACOST) {
+                    cardList = filterData.convertedManaCostFilter(cardList, currentFilter);
                 }
             }
             if(defaultColorFilter)
