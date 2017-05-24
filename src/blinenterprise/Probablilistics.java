@@ -34,19 +34,19 @@ public class Probablilistics extends javax.swing.JFrame {
 
         jTextField4.setText("1");
 
-        jLabel1.setText("Ilość powtórzeń karty");
+        jLabel1.setText("Repetitions of card in deck");
 
-        jLabel2.setText("Ilość prób (dobranych kart)");
+        jLabel2.setText("Number of tries");
 
-        jLabel3.setText("Ilość kart w decku");
+        jLabel3.setText("Deck size");
 
-        jLabel4.setText("Ile sztuk karty chcemy dobrać");
+        jLabel4.setText("Target amount of cards");
 
-        ResultLabel.setText("Wynik: 0%");
+        ResultLabel.setText("Result: 0%");
 
-        jLabel6.setText("Kalkulator prawdopodobieństw");
+        jLabel6.setText("Probalilistics Calculator");
 
-        CalculateButton.setText("Oblicz");
+        CalculateButton.setText("Calculate");
         CalculateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CalculateButtonActionPerformed(evt);
@@ -130,13 +130,13 @@ public class Probablilistics extends javax.swing.JFrame {
                 ResultLabel.setText("Invalid input");
                 break;
             case 1:
-                ResultLabel.setText("Wynik:  0%");
+                ResultLabel.setText("Result:  0%");
                 break;
             case 2:
                 ProbabilisticsCalculator pc = new ProbabilisticsCalculator();
                 double result = pc.Bernoulli(tries, card_amount, card_repeats, deck_size) * 100;    // Obliczenie wartosci ze schematu Bernoulliego
                 DecimalFormat df = new DecimalFormat("#.####");                                     // Formatowanie liczby double do 4 miejsc po przecinku
-                ResultLabel.setText("Wynik:  " + df.format(result) + "%");
+                ResultLabel.setText("Result:  " + df.format(result) + "%");
                 break;
         }
     }//GEN-LAST:event_CalculateButtonActionPerformed

@@ -114,37 +114,37 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ilo&#x15b;&#x107; powt&#xf3;rze&#x144; karty"/>
+        <Property name="text" type="java.lang.String" value="Repetitions of card in deck"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ilo&#x15b;&#x107; pr&#xf3;b (dobranych kart)"/>
+        <Property name="text" type="java.lang.String" value="Number of tries"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ilo&#x15b;&#x107; kart w decku"/>
+        <Property name="text" type="java.lang.String" value="Deck size"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ile sztuk karty chcemy dobra&#x107;"/>
+        <Property name="text" type="java.lang.String" value="Target amount of cards"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="ResultLabel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Wynik: 0%"/>
+        <Property name="text" type="java.lang.String" value="Result: 0%"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Kalkulator prawdopodobie&#x144;stw"/>
+        <Property name="text" type="java.lang.String" value="Probalilistics Calculator"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="CalculateButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Oblicz"/>
+        <Property name="text" type="java.lang.String" value="Calculate"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CalculateButtonActionPerformed"/>
