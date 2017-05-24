@@ -65,6 +65,7 @@ public class Interface extends javax.swing.JFrame {
     public void loadBackground() throws IOException{
         Image image = ImageIO.read(new File("image/background.jpg"));
         background.setIcon(new ImageIcon(image.getScaledInstance(this.getWidth(), this.getHeight()-30, image.SCALE_FAST))); 
+        setIconImage(image);
     }
     
     public void initializeFilterCardsFrame() {
