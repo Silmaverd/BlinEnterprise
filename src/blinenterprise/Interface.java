@@ -763,7 +763,7 @@ public class Interface extends javax.swing.JFrame {
         }
         JOptionPane.showMessageDialog(this, "MTG Deck Editor\nGrupa BlinEnterprise\nProjekt akademicki MTG Deck Editor to aplikacja użytkowa oparta"
                 + " o popularna grę karcianą Magic: The Gatering. \nAplikacja umożliwia tworzenie własnych talii spośród tysięcy dostępnych kart,"
-                + " analizowanie stowrzonych talii oraz prostą analizę rozgrywki.\nGrupa BlinEnterprise nie ponosi odpowiedzialności za szkody powstałe"
+                + " analizowanie stworzonych talii oraz prostą analizę rozgrywki.\nGrupa BlinEnterprise nie ponosi odpowiedzialności za szkody powstałe"
                 + " w wyniku uruchomienia naszego oprogramowania na komputerze.\nPrzed uruchomieniem oprogramowania należy skonsultować się z programistą "
                 + "lub technikiem, gdyż każde nieautoryzowane oprogramowanie\nzagraża sprawności oraz bezpieczeństwu komputera.\n" + "\nProdukt może z"
                 + "awierać śladowe ilości orzechów arachidowych i daktyli.", "Info ", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(image));
