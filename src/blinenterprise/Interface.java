@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -164,8 +165,18 @@ public class Interface extends javax.swing.JFrame {
         });
 
         HelpButton.setText("Help");
+        HelpButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                HelpButtonActionPerformed(evt);
+            }
+        });
 
         CreditsButton.setText("Credits");
+        CreditsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CreditsButtonActionPerformed(evt);
+            }
+        });
 
         ExitButton.setText("Exit");
         ExitButton.addActionListener(new java.awt.event.ActionListener() {
@@ -742,6 +753,25 @@ public class Interface extends javax.swing.JFrame {
     private void ExitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitButtonActionPerformed
         exit();
     }//GEN-LAST:event_ExitButtonActionPerformed
+
+    private void HelpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HelpButtonActionPerformed
+        Image image = null;
+        try {
+            image = ImageIO.read(new File("image/ricky.jpg"));
+        } catch (IOException ex) {          
+        }
+        JOptionPane.showMessageDialog(this, "MTG Deck Editor\nGrupa BlinEnterprise\nProjekt akademicki MTG Deck Editor to aplikacja użytkowa oparta"
+                + " o popularna grę karcianą Magic: The Gatering. \nAplikacja umożliwia tworzenie własnych talii spośród tysięcy dostępnych kart,"
+                + " analizowanie stowrzonych talii oraz prostą analizę rozgrywki.\nGrupa BlinEnterprise nie ponosi odpowiedzialności za szkody powstałe"
+                + " w wyniku uruchomienia naszego oprogramowania na komputerze.\nPrzed uruchomieniem oprogramowania należy skonsultować się z programistą "
+                + "lub technikiem, gdyż każde nieautoryzowane oprogramowanie\nzagraża sprawności oraz bezpieczeństwu komputera.\n" + "\nProdukt może z"
+                + "awierać śladowe ilości orzechów arachidowych i daktyli.", "Info ", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(image));
+    }//GEN-LAST:event_HelpButtonActionPerformed
+
+    private void CreditsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreditsButtonActionPerformed
+        JOptionPane.showMessageDialog(this, "Contributors:\nPrzemysław Seń - Team Leader\nBartosz Ruszniak - Vice Leader, Backend Developer\nZachary Różyński"
+                + " - Backend Developer\nJarosław Bartoszczyk - Frontend Developer", "Credits", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_CreditsButtonActionPerformed
 
     public void exit(){
         if (currentDeck == null) this.dispose();
