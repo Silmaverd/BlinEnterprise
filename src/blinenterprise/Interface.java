@@ -1,17 +1,21 @@
 package blinenterprise;
 
+import java.awt.Color;
 import java.awt.Image;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class Interface extends javax.swing.JFrame {
@@ -23,7 +27,7 @@ public class Interface extends javax.swing.JFrame {
     private TabbedPane sideboardPane;
     private FilterCardsFrame filterFrame;
     
-    public Interface() {
+    public Interface() throws IOException {
         initComponents();
         initialize();
     }
@@ -36,11 +40,12 @@ public class Interface extends javax.swing.JFrame {
         return CardNameInputLine;
     }
     
-    public void initialize(){
+    public void initialize() throws IOException{
         this.setVisible(true);
         BackButton.setVisible(false);
         DeckEditorPanel.setVisible(false);
         DeckAnalyzerPane.setVisible(false);
+        loadBackground();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         dbClient = new DatabaseClient();
         CardList.setListData(dbClient.getCardNamesArray());
@@ -54,6 +59,11 @@ public class Interface extends javax.swing.JFrame {
         DeckAnalyzer.initizlize(currentDeck, dbClient);
         
         initializeFilterCardsFrame();
+    }
+    
+    public void loadBackground() throws IOException{
+        Image image = ImageIO.read(new File("image/background.jpg"));
+        background.setIcon(new ImageIcon(image.getScaledInstance(this.getWidth(), this.getHeight()-30, image.SCALE_FAST))); 
     }
     
     public void initializeFilterCardsFrame() {
@@ -99,6 +109,9 @@ public class Interface extends javax.swing.JFrame {
         StartMenu = new javax.swing.JPanel();
         DeckEditorButton = new javax.swing.JButton();
         DeckAnalyzerButton = new javax.swing.JButton();
+        HelpButton = new javax.swing.JButton();
+        CreditsButton = new javax.swing.JButton();
+        ExitButton = new javax.swing.JButton();
         DeckEditorPanel = new javax.swing.JPanel();
         CardImage = new javax.swing.JLabel();
         CardNameInputLine = new javax.swing.JTextField();
@@ -119,6 +132,8 @@ public class Interface extends javax.swing.JFrame {
         resetAllFilters = new javax.swing.JButton();
         DeckAnalyzerPane = new javax.swing.JPanel();
         DeckAnalyzer = new blinenterprise.DeckAnalyzer();
+        background = new javax.swing.JLabel();
+        BackPanel = new javax.swing.JPanel();
         BackButton = new javax.swing.JToggleButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -131,6 +146,8 @@ public class Interface extends javax.swing.JFrame {
         loadDeck = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        StartMenu.setOpaque(false);
 
         DeckEditorButton.setText("Deck Editor");
         DeckEditorButton.addActionListener(new java.awt.event.ActionListener() {
@@ -146,26 +163,48 @@ public class Interface extends javax.swing.JFrame {
             }
         });
 
+        HelpButton.setText("Help");
+
+        CreditsButton.setText("Credits");
+
+        ExitButton.setText("Exit");
+        ExitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ExitButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout StartMenuLayout = new javax.swing.GroupLayout(StartMenu);
         StartMenu.setLayout(StartMenuLayout);
         StartMenuLayout.setHorizontalGroup(
             StartMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, StartMenuLayout.createSequentialGroup()
-                .addGap(123, 123, 123)
-                .addComponent(DeckEditorButton, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 738, Short.MAX_VALUE)
-                .addComponent(DeckAnalyzerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(117, 117, 117))
+            .addGroup(StartMenuLayout.createSequentialGroup()
+                .addGap(449, 449, 449)
+                .addGroup(StartMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(HelpButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(DeckAnalyzerButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(DeckEditorButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(CreditsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ExitButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 696, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         StartMenuLayout.setVerticalGroup(
             StartMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(StartMenuLayout.createSequentialGroup()
-                .addContainerGap(84, Short.MAX_VALUE)
-                .addGroup(StartMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(DeckEditorButton, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(DeckAnalyzerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(442, 442, 442))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, StartMenuLayout.createSequentialGroup()
+                .addContainerGap(392, Short.MAX_VALUE)
+                .addComponent(DeckEditorButton, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(DeckAnalyzerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(HelpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(CreditsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ExitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
+
+        DeckEditorPanel.setOpaque(false);
 
         CardImage.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -186,12 +225,16 @@ public class Interface extends javax.swing.JFrame {
         card_description_field.setRows(5);
         jScrollPane1.setViewportView(card_description_field);
 
+        jScrollPane2.setBackground(new java.awt.Color(0, 0, 0));
+        jScrollPane2.setOpaque(false);
+
         CardList.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 14)); // NOI18N
         CardList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        CardList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         CardList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 CardListValueChanged(evt);
@@ -206,6 +249,8 @@ public class Interface extends javax.swing.JFrame {
             }
         });
 
+        currentDeckPanel.setOpaque(false);
+
         deckNameField.setText("Nowy deck");
         deckNameField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -213,9 +258,13 @@ public class Interface extends javax.swing.JFrame {
             }
         });
 
+        deckSizeLabel.setForeground(new java.awt.Color(255, 255, 255));
         deckSizeLabel.setText("Deck size:  ");
+        deckSizeLabel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 13), new java.awt.Color(255, 255, 255))); // NOI18N
 
+        sideboardSizeLabel.setForeground(new java.awt.Color(255, 255, 255));
         sideboardSizeLabel.setText("Sideboard size:  ");
+        sideboardSizeLabel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 13), new java.awt.Color(255, 255, 255))); // NOI18N
 
         javax.swing.GroupLayout currentDeckPanelLayout = new javax.swing.GroupLayout(currentDeckPanel);
         currentDeckPanel.setLayout(currentDeckPanelLayout);
@@ -228,9 +277,9 @@ public class Interface extends javax.swing.JFrame {
                     .addGroup(currentDeckPanelLayout.createSequentialGroup()
                         .addComponent(deckNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(34, 34, 34)
-                        .addGroup(currentDeckPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(deckSizeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(sideboardSizeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(currentDeckPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(sideboardSizeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+                            .addComponent(deckSizeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         currentDeckPanelLayout.setVerticalGroup(
@@ -293,6 +342,9 @@ public class Interface extends javax.swing.JFrame {
                 .addGap(43, 43, 43)
                 .addGroup(DeckEditorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(DeckEditorPanelLayout.createSequentialGroup()
+                        .addComponent(CardNameInputLine, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(DeckEditorPanelLayout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(67, 67, 67)
                         .addGroup(DeckEditorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -310,10 +362,7 @@ public class Interface extends javax.swing.JFrame {
                             .addComponent(resetAllFilters, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(43, 43, 43)
                         .addComponent(currentDeckPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(74, 113, Short.MAX_VALUE))
-                    .addGroup(DeckEditorPanelLayout.createSequentialGroup()
-                        .addComponent(CardNameInputLine, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(74, 109, Short.MAX_VALUE))))
         );
         DeckEditorPanelLayout.setVerticalGroup(
             DeckEditorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -323,7 +372,7 @@ public class Interface extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addGroup(DeckEditorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(currentDeckPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 656, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)
                     .addGroup(DeckEditorPanelLayout.createSequentialGroup()
                         .addComponent(openFilterframe)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -334,7 +383,7 @@ public class Interface extends javax.swing.JFrame {
                         .addGroup(DeckEditorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(DeckEditorPanelLayout.createSequentialGroup()
                                 .addComponent(CardImage, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(DeckEditorPanelLayout.createSequentialGroup()
                                 .addComponent(removeCardButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -342,8 +391,10 @@ public class Interface extends javax.swing.JFrame {
                                 .addComponent(addCardToSideboardButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(removeCardFromSideboardButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
+
+        DeckAnalyzerPane.setOpaque(false);
 
         javax.swing.GroupLayout DeckAnalyzerPaneLayout = new javax.swing.GroupLayout(DeckAnalyzerPane);
         DeckAnalyzerPane.setLayout(DeckAnalyzerPaneLayout);
@@ -351,14 +402,16 @@ public class Interface extends javax.swing.JFrame {
             DeckAnalyzerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(DeckAnalyzerPaneLayout.createSequentialGroup()
                 .addComponent(DeckAnalyzer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 12, Short.MAX_VALUE))
+                .addGap(0, 35, Short.MAX_VALUE))
         );
         DeckAnalyzerPaneLayout.setVerticalGroup(
             DeckAnalyzerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(DeckAnalyzerPaneLayout.createSequentialGroup()
-                .addComponent(DeckAnalyzer, javax.swing.GroupLayout.PREFERRED_SIZE, 731, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(DeckAnalyzer, javax.swing.GroupLayout.DEFAULT_SIZE, 755, Short.MAX_VALUE)
         );
+
+        background.setText("jLabel1");
+
+        BackPanel.setOpaque(false);
 
         BackButton.setText("Back");
         BackButton.addActionListener(new java.awt.event.ActionListener() {
@@ -366,6 +419,17 @@ public class Interface extends javax.swing.JFrame {
                 BackButtonActionPerformed(evt);
             }
         });
+
+        javax.swing.GroupLayout BackPanelLayout = new javax.swing.GroupLayout(BackPanel);
+        BackPanel.setLayout(BackPanelLayout);
+        BackPanelLayout.setHorizontalGroup(
+            BackPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(BackButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+        );
+        BackPanelLayout.setVerticalGroup(
+            BackPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(BackButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
         jMenu1.setText("Application");
 
@@ -430,34 +494,34 @@ public class Interface extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(StartMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(1409, 1409, 1409)
+                .addComponent(BackPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(61, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(DeckEditorPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(DeckEditorPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(DeckAnalyzerPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(1301, 1301, 1301)
-                    .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(94, Short.MAX_VALUE)))
+                .addComponent(background, javax.swing.GroupLayout.DEFAULT_SIZE, 1653, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(StartMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(44, 44, 44)
+                .addComponent(BackPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addComponent(DeckEditorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 51, Short.MAX_VALUE)))
+                    .addGap(0, 83, Short.MAX_VALUE)))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addComponent(DeckAnalyzerPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 54, Short.MAX_VALUE)))
+                    .addGap(0, 72, Short.MAX_VALUE)))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(760, Short.MAX_VALUE)
-                    .addComponent(BackButton)
-                    .addContainerGap()))
+                .addComponent(background, javax.swing.GroupLayout.DEFAULT_SIZE, 827, Short.MAX_VALUE))
         );
 
         pack();
@@ -473,8 +537,8 @@ public class Interface extends javax.swing.JFrame {
         DeckEditorPanel.setVisible(false);
         DeckAnalyzerPane.setVisible(false);
         StartMenu.setVisible(true);
-        BackButton.setVisible(false);
         BackButton.setSelected(false);
+        BackButton.setVisible(false);
     }//GEN-LAST:event_BackButtonActionPerformed
 
     private void CardListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_CardListValueChanged
@@ -655,6 +719,31 @@ public class Interface extends javax.swing.JFrame {
     }//GEN-LAST:event_SampleHandMenuActionPerformed
 
     private void ExitMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitMenuActionPerformed
+        exit();
+    }//GEN-LAST:event_ExitMenuActionPerformed
+
+    private void openFilterframeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFilterframeActionPerformed
+        filterFrame.setVisible(true);
+        openFilterframe.setEnabled(false);
+    }//GEN-LAST:event_openFilterframeActionPerformed
+
+    private void resetAllFiltersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetAllFiltersActionPerformed
+        filterFrame.removeAllFilters();
+        dbClient.removeAllFilters();
+        CardList.setListData(dbClient.getFilteredCardNames(CardNameInputLine.getText().toLowerCase()));
+    }//GEN-LAST:event_resetAllFiltersActionPerformed
+
+    private void CardNameInputLineFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_CardNameInputLineFocusGained
+        if (CardNameInputLine.getText().equals("Wyszukaj kartę")) {
+            CardNameInputLine.setText("");
+        }
+    }//GEN-LAST:event_CardNameInputLineFocusGained
+
+    private void ExitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitButtonActionPerformed
+        exit();
+    }//GEN-LAST:event_ExitButtonActionPerformed
+
+    public void exit(){
         if (currentDeck == null) this.dispose();
         if (!currentDeck.getIsSaved()){                                  // Sprawdzenie, czy nie ma niezapisanych modyfikacji akualnie edytowanego decku
             Object[] options = {"Save", "Discard", "Cancel"};
@@ -678,25 +767,8 @@ public class Interface extends javax.swing.JFrame {
         }
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.dispose();
-    }//GEN-LAST:event_ExitMenuActionPerformed
-
-    private void openFilterframeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFilterframeActionPerformed
-        filterFrame.setVisible(true);
-        openFilterframe.setEnabled(false);
-    }//GEN-LAST:event_openFilterframeActionPerformed
-
-    private void resetAllFiltersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetAllFiltersActionPerformed
-        filterFrame.removeAllFilters();
-        dbClient.removeAllFilters();
-        CardList.setListData(dbClient.getFilteredCardNames(CardNameInputLine.getText().toLowerCase()));
-    }//GEN-LAST:event_resetAllFiltersActionPerformed
-
-    private void CardNameInputLineFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_CardNameInputLineFocusGained
-        if (CardNameInputLine.getText().equals("Wyszukaj kartę")) {
-            CardNameInputLine.setText("");
-        }
-    }//GEN-LAST:event_CardNameInputLineFocusGained
-
+    }
+    
     public void setCurrentCard(Card card){
         currentCard = card;
         showCurrentCard();
@@ -714,6 +786,10 @@ public class Interface extends javax.swing.JFrame {
         } catch (CardNotFoundException ex) {
             CardNameInputLine.setText("Card not found");
         }   
+    }
+
+    public JPanel getStartMenu() {
+        return StartMenu;
     }
     
     public static void main(String args[]) {
@@ -742,28 +818,37 @@ public class Interface extends javax.swing.JFrame {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Interface().setVisible(true);
+                try {
+                    new Interface().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton BackButton;
+    private javax.swing.JPanel BackPanel;
     private javax.swing.JLabel CardImage;
     private javax.swing.JList<String> CardList;
     private javax.swing.JTextField CardNameInputLine;
+    private javax.swing.JButton CreditsButton;
     private blinenterprise.DeckAnalyzer DeckAnalyzer;
     private javax.swing.JButton DeckAnalyzerButton;
     private javax.swing.JPanel DeckAnalyzerPane;
     private javax.swing.JButton DeckEditorButton;
     private javax.swing.JPanel DeckEditorPanel;
     private javax.swing.JTabbedPane DeckTabbedPanel;
+    private javax.swing.JButton ExitButton;
     private javax.swing.JMenuItem ExitMenu;
+    private javax.swing.JButton HelpButton;
     private javax.swing.JMenuItem ProbabilisticsMenu;
     private javax.swing.JMenuItem SampleHandMenu;
     private javax.swing.JPanel StartMenu;
     private javax.swing.JButton addCardButton;
     private javax.swing.JButton addCardToSideboardButton;
+    private javax.swing.JLabel background;
     private javax.swing.JTextArea card_description_field;
     private javax.swing.JPanel currentDeckPanel;
     private javax.swing.JMenu deckMenu;

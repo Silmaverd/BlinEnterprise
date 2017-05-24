@@ -1,13 +1,18 @@
 
 package blinenterprise;
 
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 public class BlinEnterprise {
-    public static void main(String[] args) {
-        JFrame _interface = new Interface();
+    public static void main(String[] args) throws IOException {
+        Interface _interface = new Interface();
         _interface.setTitle("MTG Deck Editor");
         _interface.addWindowListener(new WindowListener() {
             @Override
@@ -33,5 +38,6 @@ public class BlinEnterprise {
             @Override
             public void windowDeactivated(WindowEvent we) {}
         });
+        _interface.setResizable(false);
     }    
 }

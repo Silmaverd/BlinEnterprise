@@ -17,6 +17,7 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PiePlot;
+import org.jfree.chart.title.TextTitle;
 import org.jfree.data.general.DefaultPieDataset;
 
 public class DeckAnalyzer extends javax.swing.JPanel {
@@ -42,10 +43,10 @@ public class DeckAnalyzer extends javax.swing.JPanel {
             String[] cardListArray = currentDeck.getDeckAsArray();
             DeckList.setListData(cardListArray);
             DeckNameLabel.setText(currentDeck.getName());
-            PaintManaChart(currentDeck, manaChartBackgroundPanel, "Main-deck mana chart");
-            PaintTypeChart(currentDeck, typeChartBackgroundPanel, "Main-deck types chart");
-            PaintManaChart(currentDeck.getSideboard(), manaChartBackgroundPanelSB, "Sideboard mana chart");
-            PaintTypeChart(currentDeck.getSideboard(), typeChartBackgroundPanelSB, "Sideboard types chart");
+            PaintManaChart(currentDeck, manaChartBackgroundPanel, "Main-deck");
+            PaintTypeChart(currentDeck, typeChartBackgroundPanel, "");
+            PaintManaChart(currentDeck.getSideboard(), manaChartBackgroundPanelSB, "Sideboard");
+            PaintTypeChart(currentDeck.getSideboard(), typeChartBackgroundPanelSB, "");
         } catch (NullPointerException ex){
             
         }
@@ -69,6 +70,7 @@ public class DeckAnalyzer extends javax.swing.JPanel {
         manaChartBackgroundPanelSB = new javax.swing.JPanel();
         SampleHandButton = new javax.swing.JButton();
 
+        setOpaque(false);
         setPreferredSize(new java.awt.Dimension(1618, 762));
 
         DeckList.setModel(new javax.swing.AbstractListModel<String>() {
@@ -82,6 +84,8 @@ public class DeckAnalyzer extends javax.swing.JPanel {
             }
         });
         jScrollPane1.setViewportView(DeckList);
+
+        DeckNameLabel.setForeground(new java.awt.Color(255, 255, 255));
 
         CardImage.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -97,6 +101,8 @@ public class DeckAnalyzer extends javax.swing.JPanel {
             }
         });
 
+        manaChartBackgroundPanel.setOpaque(false);
+
         javax.swing.GroupLayout manaChartBackgroundPanelLayout = new javax.swing.GroupLayout(manaChartBackgroundPanel);
         manaChartBackgroundPanel.setLayout(manaChartBackgroundPanelLayout);
         manaChartBackgroundPanelLayout.setHorizontalGroup(
@@ -107,6 +113,8 @@ public class DeckAnalyzer extends javax.swing.JPanel {
             manaChartBackgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
+
+        typeChartBackgroundPanel.setOpaque(false);
 
         javax.swing.GroupLayout typeChartBackgroundPanelLayout = new javax.swing.GroupLayout(typeChartBackgroundPanel);
         typeChartBackgroundPanel.setLayout(typeChartBackgroundPanelLayout);
@@ -119,6 +127,8 @@ public class DeckAnalyzer extends javax.swing.JPanel {
             .addGap(0, 317, Short.MAX_VALUE)
         );
 
+        typeChartBackgroundPanelSB.setOpaque(false);
+
         javax.swing.GroupLayout typeChartBackgroundPanelSBLayout = new javax.swing.GroupLayout(typeChartBackgroundPanelSB);
         typeChartBackgroundPanelSB.setLayout(typeChartBackgroundPanelSBLayout);
         typeChartBackgroundPanelSBLayout.setHorizontalGroup(
@@ -129,6 +139,8 @@ public class DeckAnalyzer extends javax.swing.JPanel {
             typeChartBackgroundPanelSBLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 317, Short.MAX_VALUE)
         );
+
+        manaChartBackgroundPanelSB.setOpaque(false);
 
         javax.swing.GroupLayout manaChartBackgroundPanelSBLayout = new javax.swing.GroupLayout(manaChartBackgroundPanelSB);
         manaChartBackgroundPanelSB.setLayout(manaChartBackgroundPanelSBLayout);
@@ -174,7 +186,7 @@ public class DeckAnalyzer extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(manaChartBackgroundPanelSB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(typeChartBackgroundPanelSB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(ProbabilisticsButton, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
                     .addComponent(SampleHandButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -187,29 +199,33 @@ public class DeckAnalyzer extends javax.swing.JPanel {
                 .addComponent(DeckNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 635, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 635, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(20, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(manaChartBackgroundPanelSB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(CardImage, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
                                 .addComponent(manaChartBackgroundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(ProbabilisticsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(30, 30, 30)
-                                .addComponent(SampleHandButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(ProbabilisticsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(15, 15, 15)
                                 .addComponent(PriceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 159, Short.MAX_VALUE)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(typeChartBackgroundPanelSB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(typeChartBackgroundPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(typeChartBackgroundPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(typeChartBackgroundPanelSB, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(SampleHandButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(205, 205, 205))))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -343,10 +359,17 @@ public class DeckAnalyzer extends javax.swing.JPanel {
         piePlot.setSectionPaint("White", Color.YELLOW);
         piePlot.setSectionPaint("Green", Color.GREEN);
         piePlot.setSectionPaint("Gray", Color.GRAY);
-        chart.setAntiAlias(true);
-        chart.setBackgroundPaint(this.getBackground());
+        
+        chart.setAntiAlias(true);      
         ChartPanel chartPanel = new ChartPanel(chart);
+        Color trans = new Color(0xFF, 0xFF, 0xFF, 0);
+        chart.setBackgroundPaint(trans);
+        piePlot.setBackgroundPaint(trans);
+        piePlot.setOutlineVisible(false);
+        chart.getTitle().setPaint(Color.GREEN);
+        chartPanel.setBackground(trans);     
         chartPanel.setSize(parent.getWidth(), parent.getHeight());
+        
         parent.setVisible(true);
         parent.removeAll();
         parent.add(chartPanel, BorderLayout.CENTER);   
@@ -369,10 +392,17 @@ public class DeckAnalyzer extends javax.swing.JPanel {
         pieSet.setValue("Other", currentDeck.getOther().size());
         JFreeChart chart = ChartFactory.createPieChart(title, pieSet, true, true, true);
         PiePlot piePlot = (PiePlot) chart.getPlot();
+        
         chart.setAntiAlias(true);
-        chart.setBackgroundPaint(this.getBackground());
         ChartPanel chartPanel = new ChartPanel(chart);
+        Color trans = new Color(0xFF, 0xFF, 0xFF, 0);
+        chart.setBackgroundPaint(trans);
+        piePlot.setBackgroundPaint(trans);
+        piePlot.setOutlineVisible(false);
+        chart.getTitle().setPaint(Color.WHITE);
+        chartPanel.setBackground(trans);
         chartPanel.setSize(parent.getWidth(), parent.getHeight());
+        
         parent.setVisible(true);
         parent.removeAll();
         parent.add(chartPanel, BorderLayout.CENTER);   
